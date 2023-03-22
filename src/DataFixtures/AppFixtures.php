@@ -74,6 +74,7 @@ class AppFixtures extends Fixture
                     $station->setDomain($domain);
                     $station->setName('Station ' . $i);
                     $station->setDescription('Description de ' . $station->getName());
+                    $station->setNotation(rand(1, 10));
                     $manager->persist($station);
                 }
                 $manager->flush();

@@ -38,6 +38,9 @@ class Station
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Slope::class)]
     private Collection $slopes;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $notation = null;
+
     public function __construct()
     {
         $this->lifts = new ArrayCollection();
@@ -165,6 +168,18 @@ class Station
                 $slope->setStation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNotation(): ?int
+    {
+        return $this->notation;
+    }
+
+    public function setNotation(?int $notation): self
+    {
+        $this->notation = $notation;
 
         return $this;
     }

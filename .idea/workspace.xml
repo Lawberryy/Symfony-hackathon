@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5fb3318-dfb4-4926-9bdc-552be3ca91c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Version20230322105317.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Slope.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Slope.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Station.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Station.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +144,7 @@
       <workItem from="1679304073046" duration="450000" />
       <workItem from="1679304534540" duration="1421000" />
       <workItem from="1679308486899" duration="22057000" />
-      <workItem from="1679473591366" duration="8125000" />
+      <workItem from="1679473591366" duration="8477000" />
     </task>
     <servers />
   </component>
