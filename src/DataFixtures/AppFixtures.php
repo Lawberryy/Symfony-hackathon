@@ -90,6 +90,8 @@ class AppFixtures extends Fixture
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setPeakHour(new \DateTime('12:00'));
+
                 $manager->persist($slope);
             }
             $manager->flush();
