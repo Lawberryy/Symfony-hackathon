@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateTrailController!{% endblock %}
+
+{% block body %}
+<style>
+    .allData {
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
+
+<section>
+    <h1>Créer un parcours</h1>
+    <form>
+        <label for="stationChoice">Changer de station</label>
+        <select>
+            <option value="1">Station 1</option>
+            <option value="2">Station 2</option>
+            <option value="3">Station 3</option>
+            <option value="4">Station 4</option>
+            <option value="5">Station 5</option>
+        </select>
+    </form>
+    <div class="allData">
+        <table class="allLift">
+            <thead>
+                <tr>
+                    <th colspan="2">Toutes les remontés</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lift in lifts %}
+                    {% if lift.station.id == 1%}
+                        <tr>
+                            <td>{{ lift.name }}</td>
+                            {# <td>{{ lift.time }}</td> #}
+                            <td>4'30</td>
+                            <td>
+                                {{form_start(AddLiftTrail)}}
+                                    {{form_row(AddLiftTrail.id)}}
+                                {{form_end(AddLiftTrail)}}
+                                <button class="addLift" data-id="{{ lift.id }}">Ajouter</button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="allSlope">
+            <thead>
+                <tr>
+                    <th colspan="2">Toutes les pistes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for slope in slope %}
+                    {% if slope.station.id == 1%}
+                        <tr>
+                            <td>{{ slope.name }}</td>
+                            {# <td>{{ slope.time }}</td> #}
+                            <td>4'30</td>
+                            <td><button class="addLift" data-id="{{ slope.id }}">Ajouter</button></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="myTrail">
+            <thead>
+                <tr>
+                    <th colspan="2">Mon parcours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Remontée 1</td>
+                    <td>4'30</td>
+                    <td><button class="removeLift">Supprimer</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LiftRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +24,7 @@ class Lift
     private ?string $name = null;
 	
 	#[ORM\Column(type: Types::TIME_MUTABLE)]
-	private ?\DateTimeInterface $first_hour = null;
+                        	private ?\DateTimeInterface $first_hour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $last_hour = null;
@@ -32,6 +34,14 @@ class Lift
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
+
+    #[ORM\OneToMany(mappedBy: 'lift_id', targetEntity: LinkTrail::class)]
+    private Collection $linkTrails;
+
+    public function __construct()
+    {
+        $this->linkTrails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -63,16 +73,16 @@ class Lift
     }
 	
 	public function getFirstHour(): ?\DateTimeInterface
-	{
-		return $this->first_hour;
-	}
+                        	{
+                        		return $this->first_hour;
+                        	}
 	
 	public function setFirstHour(\DateTimeInterface $first_hour): self
-	{
-		$this->first_hour = $first_hour;
-		
-		return $this;
-	}
+                        	{
+                        		$this->first_hour = $first_hour;
+                        		
+                        		return $this;
+                        	}
 
     public function getLastHour(): ?\DateTimeInterface
     {
@@ -106,6 +116,36 @@ class Lift
     public function setExceptionMessage(?string $exception_message): self
     {
         $this->exception_message = $exception_message;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LinkTrail>
+     */
+    public function getLinkTrails(): Collection
+    {
+        return $this->linkTrails;
+    }
+
+    public function addLinkTrail(LinkTrail $linkTrail): self
+    {
+        if (!$this->linkTrails->contains($linkTrail)) {
+            $this->linkTrails->add($linkTrail);
+            $linkTrail->setLiftId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkTrail(LinkTrail $linkTrail): self
+    {
+        if ($this->linkTrails->removeElement($linkTrail)) {
+            // set the owning side to null (unless already changed)
+            if ($linkTrail->getLiftId() === $this) {
+                $linkTrail->setLiftId(null);
+            }
+        }
 
         return $this;
     }

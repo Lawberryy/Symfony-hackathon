@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SlopeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,14 @@ class Slope
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
+
+    #[ORM\OneToMany(mappedBy: 'slope_id', targetEntity: LinkTrail::class)]
+    private Collection $linkTrails;
+
+    public function __construct()
+    {
+        $this->linkTrails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +131,36 @@ class Slope
     public function setExceptionMessage(?string $exception_message): self
     {
         $this->exception_message = $exception_message;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LinkTrail>
+     */
+    public function getLinkTrails(): Collection
+    {
+        return $this->linkTrails;
+    }
+
+    public function addLinkTrail(LinkTrail $linkTrail): self
+    {
+        if (!$this->linkTrails->contains($linkTrail)) {
+            $this->linkTrails->add($linkTrail);
+            $linkTrail->setSlopeId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkTrail(LinkTrail $linkTrail): self
+    {
+        if ($this->linkTrails->removeElement($linkTrail)) {
+            // set the owning side to null (unless already changed)
+            if ($linkTrail->getSlopeId() === $this) {
+                $linkTrail->setSlopeId(null);
+            }
+        }
 
         return $this;
     }
