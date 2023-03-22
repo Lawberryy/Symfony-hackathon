@@ -91,6 +91,7 @@ class AppFixtures extends Fixture
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
                 $slope->setPeakHour(new \DateTime('12:00'));
+                $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
 
                 $manager->persist($slope);
             }
@@ -106,6 +107,7 @@ class AppFixtures extends Fixture
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
                 $lift->setPeakHour(new \DateTime('12:30'));
+                $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5
                 $manager->persist($lift);
             }
             $manager->flush();
