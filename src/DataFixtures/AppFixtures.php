@@ -105,6 +105,7 @@ class AppFixtures extends Fixture
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setPeakHour(new \DateTime('12:30'));
                 $manager->persist($lift);
             }
             $manager->flush();
