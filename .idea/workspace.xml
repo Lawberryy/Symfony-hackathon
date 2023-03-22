@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f5fb3318-dfb4-4926-9bdc-552be3ca91c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +134,7 @@
       <updated>1679304071462</updated>
       <workItem from="1679304073046" duration="450000" />
       <workItem from="1679304534540" duration="1421000" />
-      <workItem from="1679308486899" duration="22057000" />
+      <workItem from="1679308486899" duration="24364000" />
     </task>
     <servers />
   </component>
