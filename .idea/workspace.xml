@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5fb3318-dfb4-4926-9bdc-552be3ca91c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20230322105317.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Station.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Station.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/sensio_framework_extra.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/LiftController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/LiftType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/lift/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Symfony-hackathon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Symfony-hackathon.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Lift.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Lift.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +125,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/vendor/easycorp/easyadmin-bundle" />
+      <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
     </include_path>
   </component>
   <component name="ProjectId" id="2NGx9hPtGEagJlFSz9LtPwVgrQ3" />
@@ -145,6 +163,7 @@
       <workItem from="1679304534540" duration="1421000" />
       <workItem from="1679308486899" duration="22057000" />
       <workItem from="1679473591366" duration="8477000" />
+      <workItem from="1679642947432" duration="8630000" />
     </task>
     <servers />
   </component>

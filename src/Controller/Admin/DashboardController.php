@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Lift;
+use App\Entity\Slope;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -54,5 +56,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Domain', ' fa fa-map-o', Domain::class)
                 ->setPermission('ROLE_SU');
         }
+        yield MenuItem::linkToCrud('Lift', 'fa fa-person-ski-lift', Lift::class);
+        yield MenuItem::linkToCrud('Slope', 'fa fa-solid fa-angle', Slope::class);
     }
 }
