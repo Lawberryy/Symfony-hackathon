@@ -124,6 +124,8 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
         }
 
         // let's generate lifts per station as well
+        $liftTypes = ['chairlift', 'gondola', 'drag lift'];
+
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(5, 10); $i++) {
                 $lift = new Lift();
@@ -131,6 +133,7 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setType($liftTypes[rand(0, count($liftTypes) - 1)]);
                 $manager->persist($lift);
             }
             $manager->flush();
