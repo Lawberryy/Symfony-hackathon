@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChatController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .history{
+        height: 500px;
+        overflow: auto;
+        padding: 20px;
+        margin: 20px;
+        background: #0ea5e9;
+        position: relative;
+    }
+
+    .history form{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: #fff;
+    }
+
+    .message{
+        background: #fff;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        display: flex;
+    }
+
+    .message .user{
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .message .text{
+        flex: 1;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Chat Global</h1>
+
+    <div class="history">
+        {% for chat in chatHistory  %}
+            <div class="message">
+                <span class="user">{{ chat.sender.id }}</span>
+                <span class="text">{{ chat.message }}</span>
+            </div>
+        {% endfor %}
+        <form action="#">
+            <input type="text" name="message" placeholder="Ecrivez votre message">
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+    <script>
+        const socket = new WebSocket("ws://localhost:3001");
+        socket.onopen = function(e) {
+            console.log("Connection established!");
+        };
+
+        socket.onmessage = function(event) {
+            console.log(event.data);
+        };
+
+        socket.onclose = function(event) {
+            if (event.wasClean) {
+                alert('Connection closed');
+            } else {
+                alert('Connection broken');
+            }
+            alert('Code: ' + event.code + ' reason: ' + event.reason);
+        };
+
+        socket.onerror = function(error) {
+            alert("Error " + error.message);
+        };
+    </script> <!-- Script pour la connexion au websocket -->
+    <script>
+        const form = document.querySelector('form');
+        const input = document.querySelector('input');
+        const history = document.querySelector('.history');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let data = {
+                message: input.value,
+                sender: {{ app.user.id }},
+                display_name : '{{ app.user.firstName ~ ' ' ~ app.user.lastName }}',
+                sent_at: Date.now()
+            }
+            socket.send(JSON.stringify(data));
+            input.value = '';
+        });
+
+        socket.addEventListener('message', function (e) {
+            const message = document.createElement('div');
+            message.classList.add('message');
+            const data = JSON.parse(e.data);
+            message.innerHTML = `<p class="user">${data.display_name}</p><p class="text">${data.message}</p>`;
+            history.appendChild(message);
+        });
+    </script>
+</div>
+{% endblock %}
