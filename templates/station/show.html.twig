@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>{{ station.name }}</h1>
+
+	<div class="problem">
+		{% for problem in problems %}
+			<li>
+				{% if problem.station.id == station.id  %}
+					<h2>{{ problem.title }}</h2>
+					<p>{{ problem.description }}</p>
+					<!--afficher l'heure d'envoie-->
+					<p>Envoyé le
+						{{ problem.date|date('d/m/Y') }}
+						à
+						{{ problem.date|date('H:i') }}</p>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<form method="post">
+		{{ form_start(form) }}
+
+		{{ form_row(form.title) }}
+
+		{{ form_row(form.description) }}
+
+		<button type="submit">Enregistrer</button>
+
+		{{ form_end(form) }}
+	</form>
+{% endblock %}
