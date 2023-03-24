@@ -38,6 +38,9 @@ class Station
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Slope::class)]
     private Collection $slopes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $weather = null;
+
     public function __construct()
     {
         $this->lifts = new ArrayCollection();
@@ -165,6 +168,18 @@ class Station
                 $slope->setStation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWeather(): ?string
+    {
+        return $this->weather;
+    }
+
+    public function setWeather(?string $weather): self
+    {
+        $this->weather = $weather;
 
         return $this;
     }

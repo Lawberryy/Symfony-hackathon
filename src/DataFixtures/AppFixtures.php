@@ -65,15 +65,17 @@ class AppFixtures extends Fixture
         $domains = $manager->getRepository(Domain::class)->findAll();
         $users = $manager->getRepository(User::class)->findAll();
 
-        $randKey = rand(0, count($users) - 1);
+        $weathers = ['sunny', 'snowy', 'cloudy', 'rainy', 'foggy'];
 
             foreach ($domains as $domain) {
                 for ($i = 1; $i <= 5; $i++) {
                     $station = new Station();
-                    $station->setOwner($users[$randKey]);
+                    $station->setOwner($users[rand(1, count($users) - 1)]);
+                    // on commence à 1 (et non 0) pour éliminer le super user de la liste des owners possibles
                     $station->setDomain($domain);
                     $station->setName('Station ' . $i);
                     $station->setDescription('Description de ' . $station->getName());
+                    $station->setWeather($weathers[rand(0, count($weathers) - 1)]);
                     $manager->persist($station);
                 }
                 $manager->flush();
