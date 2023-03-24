@@ -11,6 +11,7 @@ use App\Repository\TrailRepository;
 use App\Repository\LinkTrailRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,8 +37,8 @@ class CreateTrailController extends AbstractController
     {
 
         // Get lifts from staion 1
-        $allLifts = $liftRepository->findBy(['station' => 1]);
-        $allSlopes = $slopeRepository->findBy(['station' => 1]);
+        $allLifts = $liftRepository->findBy(['station' => 21]);
+        $allSlopes = $slopeRepository->findBy(['station' => 21]);
 
 
         $arrayLifts = [];
@@ -65,6 +66,12 @@ class CreateTrailController extends AbstractController
                 'expanded' => false,
                 'multiple' => false,
                 'attr' => ['class' => 'form-select']
+            ])
+            ->getForm();
+
+        $formTrail = $this->createFormBuilder()
+            ->add('TrailName', TextType::class, [
+                'attr' => ['class' => 'form-control']
             ])
             ->getForm();
 
@@ -102,6 +109,7 @@ class CreateTrailController extends AbstractController
         // Add data in database 
         $formLift->handleRequest($request);
         $formSlope->handleRequest($request);
+        $formTrail->handleRequest($request);
         if ($formLift->isSubmitted() && $formLift->isValid()) {
             $data = $formLift->getData();
 
@@ -112,6 +120,8 @@ class CreateTrailController extends AbstractController
 
             $entityManager->persist($newLinkTrail);
             $entityManager->flush();
+
+            return $this->redirectToRoute('app_create_trail');
         } else if ($formSlope->isSubmitted() && $formSlope->isValid()) {
             $data = $formSlope->getData();
 
@@ -122,18 +132,48 @@ class CreateTrailController extends AbstractController
 
             $entityManager->persist($newLinkTrail);
             $entityManager->flush();
+
+            return $this->redirectToRoute('app_create_trail');
         }
 
-        dd($LinkTrail->findBy(['trail_id' => $lastTrail->getId()])[0]->getLiftId()->getName());
+        $myTrail = $LinkTrail->findBy(['trail_id' => $lastTrail->getId()]);
 
+        // Calcul total temps de trajet
+        $totalDuration = new \DateTime('00:00');
+        foreach ($myTrail as $trailPart) {
+            if ($trailPart->getLiftId()) {
+                $liftDuration = $trailPart->getLiftId()->getDuration();
+                $liftDateTime = new \DateTime('@' . $liftDuration->getTimestamp());
+                $totalDuration->add((new \DateTime('00:00:00'))->diff($liftDateTime));
+            } elseif ($trailPart->getSlopeId()) {
+                $slopeDuration = $trailPart->getSlopeId()->getDuration();
+                $slopeDateTime = new \DateTime('@' . $slopeDuration->getTimestamp());
+                $totalDuration->add((new \DateTime('00:00:00'))->diff($slopeDateTime));
+            }
+        }
+        
+        if ($formTrail->isSubmitted() && $formTrail->isValid()) {
+            $data = $formTrail->getData();
+
+            $lastTrail->setTotalDuration($totalDuration);
+            $lastTrail->setName($data['TrailName']);
+            $lastTrail->setIsCompleted(true);
+
+            $entityManager->persist($lastTrail);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_create_trail');
+        }
 
         return $this->render('create_trail/index.html.twig', [
             'controller_name' => 'CreateTrailController',
             'lifts' => $allLifts,
             'slopes' => $allSlopes,
-            'trails' => $LinkTrail->findBy(['trail_id' => $lastTrail->getId()]),
+            'trails' => $myTrail,
+            'totalDuration' => $totalDuration,
             'formLift' => $formLift->createView(),
             'formSlope' => $formSlope->createView(),
+            'formTrail' => $formTrail->createView(),
         ]);
     }
 }

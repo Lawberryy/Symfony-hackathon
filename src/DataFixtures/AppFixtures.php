@@ -84,12 +84,14 @@ class AppFixtures extends Fixture
 
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(10, 20); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $slope = new Slope();
                 $slope->setStation($station);
                 $slope->setName('Slope ' . $i);
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setDuration(new \DateTime($randomDuration));
                 $manager->persist($slope);
             }
             $manager->flush();
@@ -98,11 +100,13 @@ class AppFixtures extends Fixture
         // let's generate lifts per station as well
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(5, 10); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $lift = new Lift();
                 $lift->setStation($station);
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setDuration(new \DateTime($randomDuration));
                 $manager->persist($lift);
             }
             $manager->flush();

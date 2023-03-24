@@ -41,6 +41,9 @@ class Slope
     #[ORM\OneToMany(mappedBy: 'slope_id', targetEntity: LinkTrail::class)]
     private Collection $linkTrails;
 
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $duration = null;
+
     public function __construct()
     {
         $this->linkTrails = new ArrayCollection();
@@ -161,6 +164,18 @@ class Slope
                 $linkTrail->setSlopeId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuration(): ?\DateTimeInterface
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(\DateTimeInterface $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }

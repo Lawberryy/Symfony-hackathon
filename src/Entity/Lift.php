@@ -24,7 +24,7 @@ class Lift
     private ?string $name = null;
 	
 	#[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $first_hour = null;
+             private ?\DateTimeInterface $first_hour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $last_hour = null;
@@ -37,6 +37,9 @@ class Lift
 
     #[ORM\OneToMany(mappedBy: 'lift_id', targetEntity: LinkTrail::class)]
     private Collection $linkTrails;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $duration = null;
 
     public function __construct()
     {
@@ -73,16 +76,16 @@ class Lift
     }
 	
 	public function getFirstHour(): ?\DateTimeInterface
-                        	{
-                        		return $this->first_hour;
-                        	}
+                                 	{
+                                 		return $this->first_hour;
+                                 	}
 	
 	public function setFirstHour(\DateTimeInterface $first_hour): self
-                        	{
-                        		$this->first_hour = $first_hour;
-                        		
-                        		return $this;
-                        	}
+                                 	{
+                                 		$this->first_hour = $first_hour;
+                                 		
+                                 		return $this;
+                                 	}
 
     public function getLastHour(): ?\DateTimeInterface
     {
@@ -146,6 +149,18 @@ class Lift
                 $linkTrail->setLiftId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuration(): ?\DateTimeInterface
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(\DateTimeInterface $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }

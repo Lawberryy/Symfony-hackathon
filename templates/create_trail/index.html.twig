@@ -38,7 +38,7 @@
                     {% for lift in lifts %}
                         <tr>
                             <td>{{ lift.name }}</td>
-                            <td>4'30</td>
+                            <td>{{lift.duration|date("i:s")}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -63,8 +63,7 @@
                     {% for slope in slopes %}
                         <tr>
                             <td>{{ slope.name }}</td>
-                            {# <td>{{ slope.time }}</td> #}
-                            <td>4'30</td>
+                            <td>{{ slope.duration|date("i:s")  }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -88,17 +87,26 @@
                 <tbody>
                     {% for trail in trails %}
                         <tr>
-                            {% if trail.lift_id == null %}
-                                <td>{{ trail.slope.name }}</td>
-                                <td>4'30</td>
+                            {% if trail.liftid == null %}
+                                <td>{{ trail.slopeid.name }}</td>
+                                <td>{{ trail.slopeid.duration|date("i:s") }}</td>
                             {% else %}
-                                <td>{{ trail.lift.name }}</td>
-                                <td>4'30</td>
+                                <td>{{ trail.liftid.name }}</td>
+                                <td>{{ trail.liftid.duration|date("i:s") }}</td>
                             {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <div>
+                <h2>Temps total : {{totalDuration|date("i:s") }}</h2>
+                {{ form_start(formTrail) }}
+                    {{ form_row(formTrail.TrailName, {
+                        label: 'Donner un nom à votre trajet :'
+                    }) }}
+                    <button type="submit" class="btn">Ajouter</button>
+                {{ form_end(formTrail) }}
+            </div>
         </div>
     </div>
 </section>
