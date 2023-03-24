@@ -51,12 +51,15 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Station', 'fa fa-snowflake-o', Station::class);
         if ($this->authChecker->isGranted('ROLE_SU')) {
             yield MenuItem::linkToCrud('Domain', ' fa fa-map-o', Domain::class)
                 ->setPermission('ROLE_SU');
         }
+<<<<<<< HEAD
         yield MenuItem::linkToCrud('Lift', 'fa fa-person-ski-lift', Lift::class);
         yield MenuItem::linkToCrud('Slope', 'fa fa-solid fa-angle', Slope::class);
+=======
+        yield MenuItem::linkToCrud('Station', 'fa fa-snowflake-o', Station::class);
+>>>>>>> 2cd37fc1d29dc25175a5af3257ac1751e5b1c504
     }
 }
