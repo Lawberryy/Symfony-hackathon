@@ -2,19 +2,26 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Station;
+use App\Entity\Domain;
 use App\Repository\UserRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class StationCrudController extends AbstractCrudController
+class DomainCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Station::class;
+        return Domain::class;
     }
+
 
     public function configureFields(string $pageName): iterable
     {
