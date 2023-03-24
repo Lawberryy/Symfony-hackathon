@@ -4,19 +4,112 @@
 
 {% block body %}
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color : white;
+    }
+
+    h1{
+        text-align: center;
+        font-size: 42px;
+        margin: 10px;
+    }
+
+    body {
+        background-image: url("../backgroundTrail.jpg");
+        background-size: cover;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
     .tableAndForm {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 25%;
     }
+
+    .tableAndForm div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
     .allData {
         display: flex;
         justify-content: space-around;
+        width: 100%;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: black;
+    }
+
+    option{
+        color: black;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    button{
+        background-color: #DB2828;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 8px 2px;
+        cursor: pointer;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 2px;
+    }
+
+    label{
+        margin: 10px;
+        font-weight: bold;
     }
 </style>
 
 <section>
     <h1>Créer un parcours</h1>
-    <form>
+    {# <form>
         <label for="stationChoice">Changer de station</label>
         <select>
             <option value="1">Station 1</option>
@@ -25,13 +118,13 @@
             <option value="4">Station 4</option>
             <option value="5">Station 5</option>
         </select>
-    </form>
+    </form> #}
     <div class="allData">
         <div class="tableAndForm">
             <table class="allLift">
                 <thead>
                     <tr>
-                        <th colspan="2">Toutes les remontés</th>
+                        <th colspan="2">Toutes les remontées</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +139,7 @@
             <div>
                 {{ form_start(formLift) }}
                     {{ form_row(formLift.addLift, {
-                        label: 'Ajouter une remonté :'
+                        label: 'Ajouter une remontée :'
                     }) }}
                     <button type="submit" class="btn">Ajouter</button>
                 {{ form_end(formLift) }}
