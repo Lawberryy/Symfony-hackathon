@@ -4,6 +4,10 @@
 
 {% block body %}
 <style>
+    .tableAndForm {
+        display: flex;
+        flex-direction: column;
+    }
     .allData {
         display: flex;
         justify-content: space-around;
@@ -23,64 +27,79 @@
         </select>
     </form>
     <div class="allData">
-        <table class="allLift">
-            <thead>
-                <tr>
-                    <th colspan="2">Toutes les remontés</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for lift in lifts %}
-                    {% if lift.station.id == 1%}
+        <div class="tableAndForm">
+            <table class="allLift">
+                <thead>
+                    <tr>
+                        <th colspan="2">Toutes les remontés</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lift in lifts %}
                         <tr>
                             <td>{{ lift.name }}</td>
-                            {# <td>{{ lift.time }}</td> #}
                             <td>4'30</td>
-                            <td>
-                                {{form_start(AddLiftTrail)}}
-                                    {{form_row(AddLiftTrail.id)}}
-                                {{form_end(AddLiftTrail)}}
-                                <button class="addLift" data-id="{{ lift.id }}">Ajouter</button>
-                            </td>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-        <table class="allSlope">
-            <thead>
-                <tr>
-                    <th colspan="2">Toutes les pistes</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for slope in slope %}
-                    {% if slope.station.id == 1%}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                {{ form_start(formLift) }}
+                    {{ form_row(formLift.addLift, {
+                        label: 'Ajouter une remonté :'
+                    }) }}
+                    <button type="submit" class="btn">Ajouter</button>
+                {{ form_end(formLift) }}
+            </div>
+        </div>
+        <div class="tableAndForm">
+            <table class="allSlope">
+                <thead>
+                    <tr>
+                        <th colspan="2">Toutes les pistes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for slope in slopes %}
                         <tr>
                             <td>{{ slope.name }}</td>
                             {# <td>{{ slope.time }}</td> #}
                             <td>4'30</td>
-                            <td><button class="addLift" data-id="{{ slope.id }}">Ajouter</button></td>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-        <table class="myTrail">
-            <thead>
-                <tr>
-                    <th colspan="2">Mon parcours</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Remontée 1</td>
-                    <td>4'30</td>
-                    <td><button class="removeLift">Supprimer</button></td>
-                </tr>
-            </tbody>
-        </table>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                {{ form_start(formSlope) }}
+                    {{ form_row(formSlope.addSlope, {
+                        label: 'Ajouter une piste :'
+                    }) }}
+                    <button type="submit" class="btn">Ajouter</button>
+                {{ form_end(formSlope) }}
+            </div>
+        </div>
+        <div class="tableAndForm">
+            <table class="myTrail">
+                <thead>
+                    <tr>
+                        <th colspan="2">Mon parcours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trail in trails %}
+                        <tr>
+                            {% if trail.lift_id == null %}
+                                <td>{{ trail.slope.name }}</td>
+                                <td>4'30</td>
+                            {% else %}
+                                <td>{{ trail.lift.name }}</td>
+                                <td>4'30</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>
-
 {% endblock %}

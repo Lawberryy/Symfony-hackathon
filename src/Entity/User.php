@@ -43,10 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class)]
     private Collection $stations;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Trail::class)]
+    private Collection $trails;
+
     public function __construct()
     {
         $this->domains = new ArrayCollection();
         $this->stations = new ArrayCollection();
+        $this->trails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($station->getOwner() === $this) {
                 $station->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Trail>
+     */
+    public function getTrails(): Collection
+    {
+        return $this->trails;
+    }
+
+    public function addTrail(Trail $trail): self
+    {
+        if (!$this->trails->contains($trail)) {
+            $this->trails->add($trail);
+            $trail->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrail(Trail $trail): self
+    {
+        if ($this->trails->removeElement($trail)) {
+            // set the owning side to null (unless already changed)
+            if ($trail->getOwner() === $this) {
+                $trail->setOwner(null);
             }
         }
 

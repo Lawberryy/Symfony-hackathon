@@ -24,7 +24,7 @@ class Lift
     private ?string $name = null;
 	
 	#[ORM\Column(type: Types::TIME_MUTABLE)]
-                        	private ?\DateTimeInterface $first_hour = null;
+    private ?\DateTimeInterface $first_hour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $last_hour = null;

@@ -25,6 +25,13 @@ class Trail
     #[ORM\OneToMany(mappedBy: 'trail_id', targetEntity: LinkTrail::class)]
     private Collection $linkTrails;
 
+    #[ORM\ManyToOne(inversedBy: 'trails')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?user $owner = null;
+
+    #[ORM\Column]
+    private ?bool $is_completed = null;
+
     public function __construct()
     {
         $this->linkTrails = new ArrayCollection();
@@ -85,6 +92,30 @@ class Trail
                 $linkTrail->setTrailId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?user
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?user $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function isIsCompleted(): ?bool
+    {
+        return $this->is_completed;
+    }
+
+    public function setIsCompleted(bool $is_completed): self
+    {
+        $this->is_completed = $is_completed;
 
         return $this;
     }
