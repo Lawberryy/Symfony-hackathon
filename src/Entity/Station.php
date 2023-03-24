@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StationRepository::class)]
@@ -23,9 +24,6 @@ class Station
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $icon_url = null;
 
     #[ORM\ManyToOne(inversedBy: 'stations')]
@@ -40,6 +38,9 @@ class Station
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $weather = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -72,18 +73,6 @@ class Station
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -180,6 +169,18 @@ class Station
     public function setWeather(?string $weather): self
     {
         $this->weather = $weather;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
