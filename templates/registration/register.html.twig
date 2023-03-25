@@ -1,19 +1,170 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription - ça glisse{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        .oswald {
+            font-family: "oswald", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .signup-body {height: 100vh; width: 100%; display: flex; position: relative}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {# {{ form_row(registrationForm.agreeTerms) }} #}
+        .signup-left-div {
+            width: 50%;
+            padding-top: 13vh;
+        }
+        .signup-child-div {
+            width: 80%;
+            margin: 0 10%;
+        }
+        .signup-title {display: flex; gap: 30px;}
+        .signup-h1 {font-size: 48px}
+        .signup-form {
+            padding-left: 50px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 35px;
+            color: #4B5F6D;
+        }
+        .btn-signup {
+            background-color: #000000;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .blue {color: #0054D2; cursor: pointer;}
+        .widget input {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(75, 95, 109, 0.4);
+            font-size: 16px;
+            font-weight: 300;
+            color: #4B5F6D;
+        }
+        /* .widget input::placeholder {font-size: 16px; font-weight: 300; opacity: 1; color: #4B5F6D;} */
+        .fn-ln {display: flex; width: 100%; gap: 10%;}
+        .fn {width: 40%;}
+        .ln {width: 50%;}
+        .fn input, .ln input {width: 100%;}
+        .email input, .pw input {width: 100%;}
+        .pw span {font-weight: 300; font-size: 12px;}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        .div-logo {
+            position: absolute;
+            top: -20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .signup-right-div {
+            width: 50%;
+            background: url("assets/images/signup-background-img.png") repeat-y top;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .signup-right-div div {
+            display: flex;
+            flex-direction: column;
+            gap: 8.7vh;
+        }
+        .signup-right-div span {
+            font-size: 55px;
+            font-weight: 600;
+            color: #FFFFFF;
+            line-height: 82px;
+            text-align: center;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .signup-right-div button {
+            font-size: 15px;
+            background-color: #DB2828;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 0;
+            width: 80%;
+            margin: 0 10%;
+            cursor: pointer;
+        }
+
+        /* responsive */
+        @media screen and (max-width: 1400px) {
+            .signup-left-div {
+                padding-top: 10vh;
+            }
+        }
+        @media screen and (max-width: 1200px) {
+            .div-logo img {
+                width: 280px;
+            }
+        }
+        /* mobile screen */
+        @media screen and (max-width: 767px) {
+            .signup-body {
+                flex-direction: column;
+                gap: 50px;
+            }
+            .signup-left-div, .signup-right-div {width: 100%;}
+            .signup-left-div {
+                padding-top: 150px;
+            }
+            .signup-right-div {padding: 40px 0;}
+            .div-logo img {
+                width: 250px;
+            }
+        }
+    </style>
+
+    <main class="signup-body">
+        <div class="signup-left-div oswald">
+            <div class="signup-child-div">
+                <div class="signup-title">
+                    <img src="assets/images/chevron-gauche.svg" alt="chevron gauche">
+                    <h1 class="oswald signup-h1">Inscription</h1>
+                </div>
+                <div class="signup-form">
+                    <div>{{ form_start(registrationForm) }}</div>
+                    <div class="fn-ln">
+                        <div class="widget ln">{{ form_row(registrationForm.lastname, {label: 'Nom'}) }}</div>
+                        <div class="widget fn">{{ form_row(registrationForm.firstname, {label: 'Prénom'}) }}</div>
+                    </div>
+                    <div class="widget email">{{ form_row(registrationForm.email, {label: 'Votre email'}) }}</div>
+                    <div class="widget pw">{{form_row(registrationForm.plainPassword, {
+                        label: 'Votre mot de passe'
+                    })}}
+                    <span>Votre mot de passe doit faire au moins 8 caractères et contenir au moins une majuscule, une minuscule et un caractère spécial.</span>
+                    </div>
+                    {# {{ form_row(registrationForm.agreeTerms) }} #}
+
+                    <div class="agree-terms">
+                        <input type="checkbox" required>
+                        <span>En créant votre compte, vous acceptez les <span class="blue">Conditions d'utilisation</span> et la <span class="blue">Politique de confidentialité</span></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-signup oswald">Inscription</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="div-logo"><img src="assets/images/logo.png" alt="logo ça glisse" class="logo"></div>
+
+        <div class="signup-right-div">
+            <div>
+                <span class="oswald">Vers l'infini...<br> et la montagne</span>
+                <button class="oswald">Déjà un compte ? Connecte-toi</button>
+            </div>
+        </div>
+    </main>
 {% endblock %}
