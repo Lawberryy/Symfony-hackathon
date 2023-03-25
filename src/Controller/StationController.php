@@ -12,13 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Problem;
 use App\Repository\ProblemRepository;
-
+use App\Repository\LiftRepository;
+use App\Entity\Lift;
 
 
 class StationController extends AbstractController
 {
     #[Route('/station/{id}', name: 'app_station_show')]
-    public function show(Request $request, Station $station, EntityManagerInterface $entityManager, ProblemRepository $problems): Response
+    public function show(Request $request, Station $station, EntityManagerInterface $entityManager, ProblemRepository $problems, LiftRepository $liftRepository): Response
 {
     $form = $this->createFormBuilder()
         ->add('title', TextType::class)
@@ -45,11 +46,13 @@ class StationController extends AbstractController
     }
 
     $problems = $problems->findBy(['station' => $station]);
+    $lifts = $liftRepository->findBy(['station' => $station]);
 
     return $this->render('station/show.html.twig', [
         'station' => $station,
         'form' => $form->createView(),
-        'problems' => $problems
+        'problems' => $problems,
+        'lifts' => $lifts
     ]);
 
     

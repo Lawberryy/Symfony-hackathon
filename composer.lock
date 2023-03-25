@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "8b5f688d97d1c42b3bbb36668bd51fbd",
+=======
+    "content-hash": "d76231742149396f2e468639eedf45b6",
+>>>>>>> origin/thomas
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -2023,6 +2027,7 @@
             "time": "2021-07-14T16:46:02+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -2679,6 +2684,8 @@
             "time": "2021-07-11T12:37:55+00:00"
         },
         {
+=======
+>>>>>>> origin/thomas
             "name": "sensio/framework-extra-bundle",
             "version": "v6.2.10",
             "source": {
