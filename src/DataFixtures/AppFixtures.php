@@ -74,6 +74,7 @@ class AppFixtures extends Fixture
                     $station->setDomain($domain);
                     $station->setName('Station ' . $i);
                     $station->setDescription('Description de ' . $station->getName());
+                    $station->setNotation(rand(1, 10));
                     $manager->persist($station);
                 }
                 $manager->flush();
@@ -90,6 +91,9 @@ class AppFixtures extends Fixture
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setPeakHour(new \DateTime('12:00'));
+                $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
+
                 $manager->persist($slope);
             }
             $manager->flush();
@@ -103,6 +107,8 @@ class AppFixtures extends Fixture
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setPeakHour(new \DateTime('12:30'));
+                $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5
                 $manager->persist($lift);
             }
             $manager->flush();
