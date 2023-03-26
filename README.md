@@ -27,11 +27,13 @@ Ce projet avait pour objectif de nous mettre au défi sur nos compétences d'org
 ### Partie back-office  
 - Création de circuits
 - Messagerie instantanée avec historique des conversations
+- Création de Rapports
 
 ### Partie front-office 
 - Affichage pour créer des circuits
 - Affichage de la messagerie
 - Animation météo
+- Rapport des problèmes via formulaire
 
 
 # <p align="center">Setup Symphony</p>
