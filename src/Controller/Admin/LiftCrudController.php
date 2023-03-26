@@ -56,6 +56,7 @@ class LiftCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
+
             $this->isGranted('ROLE_SU') ? AssociationField::new('station') :
                 AssociationField::new('station')->setRequired(true)->setFormTypeOptions([
                 'query_builder' => function ($er) {
@@ -63,6 +64,7 @@ class LiftCrudController extends AbstractCrudController
                         ->where('s.owner = :id')
                         ->setParameter('id', $this->getUser()->getId());
                 }]),
+
             ChoiceField::new("type")->setChoices([
                 'chairlift' => 'chairlift',
                 'gondola' => 'gondola',

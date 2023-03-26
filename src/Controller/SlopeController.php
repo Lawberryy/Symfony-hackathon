@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Lift;
+
 use App\Entity\Slope;
 use App\Form\SlopeType;
 use App\Repository\SlopeRepository;
+use App\Entity\Lift;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/slope')]
 class SlopeController extends AbstractController
 {
-
 
     /**
      * @throws Exception
@@ -60,7 +60,4 @@ class SlopeController extends AbstractController
 
         ]);
     }
-
-
-
 }
