@@ -2,77 +2,54 @@
 
 namespace App\Controller;
 
-use App\Entity\Lift;
-use App\Form\LiftType;
-use App\Repository\LiftRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\StationRepository;
+use App\Repository\LiftRepository;
+use App\Entity\Lift;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
-#[Route('/lift')]
 class LiftController extends AbstractController
 {
-    #[Route('/', name: 'app_lift_index', methods: ['GET'])]
-    public function index(LiftRepository $liftRepository): Response
+    #[Route('/lift', name: 'app_lift')]
+    public function index(): Response
     {
         return $this->render('lift/index.html.twig', [
-            'lifts' => $liftRepository->findAll(),
+            'controller_name' => 'LiftController',
         ]);
     }
 
-    #[Route('/new', name: 'app_lift_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, LiftRepository $liftRepository): Response
-    {
-        $lift = new Lift();
-        $form = $this->createForm(LiftType::class, $lift);
-        $form->handleRequest($request);
+    #[Route('/lift/{id}', name: 'app_lift_show')]
+    public function show(Lift $lift): Response{
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $liftRepository->save($lift, true);
+        $heureActuelle = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $heureOuverture = DateTime::createFromFormat('H:i:s', $lift->getFirstHour()->format('H:i:s'));
+        $heureFermeture = DateTime::createFromFormat('H:i:s', $lift->getLastHour()->format('H:i:s'));
 
-            return $this->redirectToRoute('app_lift_index', [], Response::HTTP_SEE_OTHER);
+        if ($heureActuelle < $heureOuverture){
+            $diff = $heureOuverture->diff($heureActuelle);
+            $tempsRestant = $diff->format('%H heures %i minutes');
+            $message = "La piste est fermée pour le moment. Elle ouvrira dans " . $tempsRestant;
+        } elseif ($heureActuelle >= $heureOuverture && $heureActuelle <= $heureFermeture){
+            $diff = $heureFermeture->diff($heureActuelle);
+            $tempsRestant = $diff->format('%H heures %i minutes');
+            $message = "La piste est ouverte. Elle fermera dans " . $tempsRestant;
+        } else {
+            $diff = $heureActuelle->diff($heureFermeture);
+            $tempsRestant = $diff->format('%H heures %i minutes');
+            $message = "La piste est fermée depuis " . $tempsRestant;
         }
 
-        return $this->renderForm('lift/new.html.twig', [
-            'lift' => $lift,
-            'form' => $form,
-        ]);
-    }
 
-    #[Route('/{id}', name: 'app_lift_show', methods: ['GET'])]
-    public function show(Lift $lift): Response
-    {
+        $heureTest = $heureActuelle->format('%H heures %i minutes');
+
         return $this->render('lift/show.html.twig', [
             'lift' => $lift,
+            'message' => $message,
+            'heureTest' => $heureTest,
         ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_lift_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Lift $lift, LiftRepository $liftRepository): Response
-    {
-        $form = $this->createForm(LiftType::class, $lift);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $liftRepository->save($lift, true);
-
-            return $this->redirectToRoute('app_lift_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('lift/edit.html.twig', [
-            'lift' => $lift,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_lift_delete', methods: ['POST'])]
-    public function delete(Request $request, Lift $lift, LiftRepository $liftRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$lift->getId(), $request->request->get('_token'))) {
-            $liftRepository->remove($lift, true);
-        }
-
-        return $this->redirectToRoute('app_lift_index', [], Response::HTTP_SEE_OTHER);
     }
 }
