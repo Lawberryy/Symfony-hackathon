@@ -75,7 +75,7 @@ php bin/console doctrine:migrations:migrate
 ```
 <hr>
 
-# <p align="center">Setup Fixtures  </p>
+
 
 ```bash
 php bin/console make:fixture
@@ -84,3 +84,20 @@ Rentrer les infos des tables dans le fichier ``src/DataFixtures/AppFixtures.php`
 ```bash
 php bin/console doctrine:fixture:load
 ```
+
+# <p align="center">Lancer le Chat en Direct </p>
+
+Dans un nouveau terminal :
+```bash
+php bin/console run:websocket
+```
+
+# <p align="center">Identifiants  </p>
+
+Super Admin :
+
+> Super.User@gmail.com | viveleski
+
+Admin :
+
+> firstname1.lastname1@gmail.com | vivelamontagne
