@@ -217,7 +217,7 @@ class Station
             if ($problem->getStation() === $this) {
                 $problem->setStation(null);
             }
-        }
+        }}
 
     public function getNotation(): ?int
     {
