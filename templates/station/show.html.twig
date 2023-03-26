@@ -90,7 +90,15 @@
 
 			{{ form_end(form) }}
 		</form>
+    {% if station.weather == 'snowy' %}
+			{% include "_partials/_snowfall.html.twig" %}
+		{% endif %}
 	</div>
+  
+    <!-- {% if station.weather == 'cloudy' %}
+		{% include "_partials/_cloudy.html.twig" %}
+	{% endif %} -->
+  
 	<style>
 		.nameteo {
 			display: flex;
@@ -123,12 +131,16 @@
 			margin-right: auto;
 		}
 
+
 		.probtitle2 {
 			color: black;
 			font-size: 25px;
 			text-align: center;
 		}
 
+		.conteneur {
+			z-index: 2;
+		}
 
 		.form {
 			display: flex;
@@ -178,7 +190,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			text-align: center width: 30vw;
+			text-align: center;
 			width: 30vw;
 			height: auto;
 			background-color: white;
