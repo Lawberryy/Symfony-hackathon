@@ -11,6 +11,7 @@
     .example-wrapper {
         padding: 100px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 100%;
@@ -23,6 +24,7 @@
     }
 
     .card_domain {
+        margin: 2em;
         position: relative;
         width: 90%;
         height: 450px;
@@ -34,6 +36,13 @@
         object-fit: cover;
         width: 100%;
         height: 100%;
+    }
+
+    .card_domain img.domain-icon {
+        width: 100px;
+        height: 100px;
+        position: static !important;
+        object-fit: contain;
     }
 
     .card_domain .content {
@@ -140,6 +149,7 @@
             height: 50%;
         }
 
+
         .card_domain .content {
             height: 50%;
             width: 100%;
@@ -173,8 +183,6 @@
             background-color: #DB2828;
         }
     }
-
-    @media(max-width: 700px) {}
 </style>
 <div class="background">
     <img src="{{ asset('assets/img/Domaines_background_ED.jpg')}}" alt="">
@@ -190,6 +198,7 @@
     {% for domain in domains %}
     <div class="card_domain">
         <div class="content">
+            <img class="domain-icon" src="{{ asset('/uploads/icons/default_domain.png') }}" alt="">
             <h3> {{ domain.name }} </h3>
             <p>{{ domain.description }} </p>
             <a href="{{ path('app_domain_show', {'id': domain.id}) }}">En savoir plus</a>

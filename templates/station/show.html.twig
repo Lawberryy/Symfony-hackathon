@@ -10,7 +10,7 @@
 			{% for slope in slopes %}
 				<li class="lifts">
 					{% if slope.station.id == station.id  %}
-						<a class="button" href="{{ path('app_lift_show', { id: slope.id }) }}" class="card-title">{{ slope.name }}</a>
+						<a class="button" href="{{ path('app_slope_show', { id: slope.id }) }}" class="card-title">{{ slope.name }}</a>
 					</li>
 				{% endif %}
 			{% endfor %}

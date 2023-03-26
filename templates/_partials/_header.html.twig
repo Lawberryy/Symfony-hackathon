@@ -37,7 +37,7 @@
     }
 
     nav {
-        width: 80%;
+        width: 84%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -184,8 +184,9 @@
         </div>
         <ul class="nav-links">
             <li><a href="{{ path('app_liste_domain')}}">DOMAINES</a></li>
-            <li><a href="#">STATIONS</a></li>
             {% if app.user %}
+                <li><a href="{{ path('app_create_trail') }}">CREER UN CIRCUIT</a></li>
+                <li><a href="{{ path('app_chat') }}">CHAT</a></li>
                 {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SU' in app.user.roles %}
                     <li><a href="{{ path('admin')}}">ADMIN</a></li>
                 {% else %}

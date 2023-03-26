@@ -56,6 +56,9 @@ class Slope
     #[ORM\Column(nullable: true)]
     private ?int $snow_quality = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
 
     public function getId(): ?int
     {
@@ -161,6 +164,7 @@ class Slope
             $this->linkTrails->add($linkTrail);
             $linkTrail->setSlopeId($this);
         }
+    }
 
     public function getPeakHour(): ?\DateTimeInterface
     {
@@ -213,5 +217,17 @@ class Slope
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }
