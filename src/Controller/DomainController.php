@@ -16,11 +16,13 @@ class DomainController extends AbstractController
     public function show(int $id, DomainRepository $domainRepository, StationRepository $StationRepository): Response
     {
         $domain = $domainRepository->find($id);
-        $stations = $StationRepository->findAll();
+        $domain = $domainRepository->find($id);
 
         if (!$domain) {
             throw $this->createNotFoundException('Le domaine avec l\'ID ' . $id . ' n\'existe pas');
         }
+        $stations = $domain->getStations();
+
 
         return $this->render('domain/show.html.twig', [
             'domain' => $domain,
