@@ -43,14 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class)]
     private Collection $stations;
 
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: ChatHistory::class)]
-    private Collection $chatHistories;
-
     public function __construct()
     {
         $this->domains = new ArrayCollection();
         $this->stations = new ArrayCollection();
-        $this->chatHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,35 +206,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->firstname . ' ' . $this->lastname;
-    }
-
-    /**
-     * @return Collection<int, ChatHistory>
-     */
-    public function getChatHistories(): Collection
-    {
-        return $this->chatHistories;
-    }
-
-    public function addChatHistory(ChatHistory $chatHistory): self
-    {
-        if (!$this->chatHistories->contains($chatHistory)) {
-            $this->chatHistories->add($chatHistory);
-            $chatHistory->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChatHistory(ChatHistory $chatHistory): self
-    {
-        if ($this->chatHistories->removeElement($chatHistory)) {
-            // set the owning side to null (unless already changed)
-            if ($chatHistory->getSender() === $this) {
-                $chatHistory->setSender(null);
-            }
-        }
-
-        return $this;
     }
 }

@@ -21,8 +21,8 @@ class Lift
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 	
-	  #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $first_hour = null;
+	#[ORM\Column(type: Types::TIME_MUTABLE)]
+                  	private ?\DateTimeInterface $first_hour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $last_hour = null;
@@ -33,16 +33,11 @@ class Lift
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
 
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $type = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $Peak_Hour = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $comfort = null;
-
 
     public function getId(): ?int
     {
@@ -74,16 +69,16 @@ class Lift
     }
 	
 	public function getFirstHour(): ?\DateTimeInterface
-         	{
-         		return $this->first_hour;
-         	}
+                  	{
+                  		return $this->first_hour;
+                  	}
 	
 	public function setFirstHour(\DateTimeInterface $first_hour): self
-         	{
-         		$this->first_hour = $first_hour;
-         		
-         		return $this;
-         	}
+                  	{
+                  		$this->first_hour = $first_hour;
+                  		
+                  		return $this;
+                  	}
 
     public function getLastHour(): ?\DateTimeInterface
     {
@@ -121,16 +116,6 @@ class Lift
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-        return $this;
-    }
     public function getPeakHour(): ?\DateTimeInterface
     {
         return $this->Peak_Hour;
