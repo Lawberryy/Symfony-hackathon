@@ -6,7 +6,7 @@
         padding: 0;
         margin: 0;
         box-sizing: border-box;
-        font-family: 'Oswald';
+        font-family: 'Oswald', sans-serif;
     }
 
     body.nav-active {
@@ -74,7 +74,6 @@
         background-color: #e42323;
         margin: 5px;
     }
-
 
     .burger.toggle div:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
@@ -184,19 +183,9 @@
 
         </div>
         <ul class="nav-links">
-            <li><a href="#">GUIDE DES STATIONS</a></li>
-            <li><a href="#">DOMAINE</a></li>
-            <li><a href="#">STATION</a></li>
-            {% if app.user %}
-                {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SU' in app.user.roles %}
-                    <li><a href="{{ path('admin')}}">ADMIN</a></li>
-                {% else %}
-                    <li><a href="#">MON COMPTE</a></li>
-                {% endif %}
-                <li><a href="{{ path('app_logout')}}">ME DECONNECTER</a></li>
-            {% else %}
-                <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
-            {% endif %}
+            <li><a href="#">DOMAINES</a></li>
+            <li><a href="#">STATIONS</a></li>
+            <li><a href="#">MON COMPTE</a></li>
         </ul>
         <div class="burger">
             <div class="line1"></div>

@@ -219,7 +219,6 @@ class Station
             }
         }
     }
-    
     public function getNotation(): ?int
     {
         return $this->notation;
