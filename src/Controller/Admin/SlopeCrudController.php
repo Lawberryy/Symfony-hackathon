@@ -54,17 +54,23 @@ class SlopeCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            AssociationField::new("station")->setRequired(true)->setFormTypeOptions([
-                'query_builder' => function ($er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.owner = :id')
-                        ->setParameter('id', $this->getUser()->getId());
-                }
-            ]),
+            $this->isGranted('ROLE_SU') ? AssociationField::new('station') :
+                AssociationField::new("station")->setRequired(true)->setFormTypeOptions([
+                    'query_builder' => function ($er) {
+                        return $er->createQueryBuilder('u')
+                            ->where('u.owner = :id')
+                            ->setParameter('id', $this->getUser()->getId());
+                    }
+                ]),
+            ChoiceField::new("type")->setChoices([
+                'Alpine' => 'alpine',
+                'Nordic' => 'nordic',
+            ])->setRequired(true),
             IntegerField::new("difficulty")->setHelp('1: green, 2: blue, 3: red, 4: black')->setFormTypeOptions(['attr' => ['min' => 1, 'max' => 4]])->setRequired(true),
             TimeField::new('first_hour')->setFormat('HH:mm'),
             TimeField::new('last_hour')->setFormat('HH:mm'),
             TimeField::new('peak_hour')->setFormat('HH:mm')->hideOnIndex(),
+            TimeField::new('duration')->setFormat('HH:mm:ss'),
             IntegerField::new('snow_quality')->setFormTypeOptions(['attr' => ['min' => 1, 'max' => 5]])->setHelp('1: no snow, 5: very good snow')->setRequired(true),
             BooleanField::new('exception'),
             TextField::new('exception_message'),

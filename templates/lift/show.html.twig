@@ -5,10 +5,233 @@
 
 {% block body %}
 
-    <h1>Hello
-        {{ lift.name }}! ✅</h1>
+    <div class="container">
+
+
+    <h1>{{ lift.name }}</h1>
     <h2>{{ message }}</h2>
     <h2>{{ heureTest }}</h2>
 
+
+        <section class="lift-first-section">
+
+            <h1 class="card-name-test"> {{ lift.name }}! </h1>
+            <a class="btn-station" href="{{ path('app_station_show', {'id': lift.station.id}) }}">Accedez aux infos de la
+                station</a>
+
+
+        </section>
+        <section class="lift-data-section">
+
+
+            {% if lift.exception == true %}
+                <div class="closed-div">
+                    <h1 class="closed"> fermé </h1>
+                    <h2 class="exeption_message"> {{ exception_message }} </h2>
+
+                </div>
+
+            {% else %}
+                {% if message == "La piste est ouverte. Elle fermera dans " %}
+                    <div>
+                        <h2 class="green-message">{{ message }} : </h2>
+                        <h2>{{ messageValue }}</h2>
+                    </div>
+                {% else %}
+                    <div>
+                        <h2 class="red-message">{{ message }} : </h2>
+                        <h2>{{ messageValue }}</h2>
+                    </div>
+                {% endif %}
+                <div>
+                    <h2> confort :</h2>
+
+                    <h2>{{ lift.comfort }} / 10</h2>
+                </div>
+
+            {% endif %}
+
+
+        </section>
+
+    </div>
+
+
+
+
+
+    <style>
+        .green-message {
+            color: green;
+
+        }
+        .red-message {
+            color: red;
+
+
+        }
+        .closed {
+            text-transform: uppercase;
+            color: red;
+            margin-bottom: 150px;
+            font-weight: bold;
+            font-size: 50px;
+            width: 100%;
+
+            border: 4px double red;
+            text-align: center;
+
+        }
+
+        .closed-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            justify-content: space-around;
+
+
+        }
+
+        .exeption_message {
+            color: black;
+            margin-bottom: 150px;
+            font-weight: bold;
+            font-size: 50px;
+            background-color: white;
+            opacity: 0.8;
+
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+
+            height: 70vh;
+            width: 100vw;
+
+        }
+
+        .lift-first-section {
+
+            height: 70vh;
+            width: 40%;
+            background: url("/assets/images/signup-background-img.png");
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            justify-content: space-around;
+
+        }
+
+        body {
+
+        }
+
+        .card-name-test {
+            color: white;
+
+
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 75px;
+
+        }
+
+        .btn-station {
+            background-color: #000000;
+            color: #FFFFFF;
+            opacity: 0.9;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 0;
+            width: 150px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-station:hover {
+            background-color: #0054D2;
+        }
+
+        .lift-data-section {
+            padding: 40px 0;
+            height: 70vh;
+            width: 40%;
+
+
+            background: url("/assets/img/activitée/ski-de-fond.jpg");
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: space-between;
+
+
+        }
+
+
+        @media only screen and (max-width : 1224px){
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+
+                height: 140vh;
+                width: 100vw;
+            }
+            .lift-data-section {
+                margin-top: 50px;
+                padding: 40px 0;
+                height: 70vh;
+                width: 70%;
+
+
+                background: url("/assets/img/activitée/ski-de-fond.jpg");
+
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+
+
+                display: flex;
+                flex-direction: column;
+
+                align-items: center;
+                justify-content: space-between;
+
+
+            }
+            .lift-first-section {
+                margin-top: 20px;
+
+                height: 70vh;
+                width: 70%;
+
+
+            }
+        }
+
+    </style>
 
 {% endblock %}

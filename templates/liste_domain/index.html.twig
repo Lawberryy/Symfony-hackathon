@@ -11,6 +11,7 @@
     .example-wrapper {
         padding: 100px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 100%;
@@ -36,6 +37,12 @@
         height: 100%;
     }
 
+    .card_domain img.domain-icon {
+        width: 100px;
+        height: 100px;
+        position: static !important;
+        object-fit: contain;
+    }
     .card_domain .content {
         height: 80%;
         width: 60%;
@@ -173,7 +180,6 @@
             background-color: #DB2828;
         }
     }
-
     @media(max-width: 700px) {}
 </style>
 <div class="background">
@@ -190,6 +196,7 @@
     {% for domain in domains %}
     <div class="card_domain">
         <div class="content">
+            <img class="domain-icon" src="{{ asset('/uploads/icons/default_domain.png') }}" alt="">
             <h3> {{ domain.name }} </h3>
             <p>{{ domain.description }} </p>
             <a href="{{ path('app_domain_show', {'id': domain.id}) }}">En savoir plus</a>

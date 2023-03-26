@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SlopeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,12 +38,26 @@ class Slope
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
 
+
+    #[ORM\OneToMany(mappedBy: 'slope_id', targetEntity: LinkTrail::class)]
+    private Collection $linkTrails;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $duration = null;
+
+    public function __construct()
+    {
+        $this->linkTrails = new ArrayCollection();
+    }
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $Peak_Hour = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $snow_quality = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
 
     public function getId(): ?int
@@ -133,6 +149,23 @@ class Slope
         return $this;
     }
 
+
+    /**
+     * @return Collection<int, LinkTrail>
+     */
+    public function getLinkTrails(): Collection
+    {
+        return $this->linkTrails;
+    }
+
+    public function addLinkTrail(LinkTrail $linkTrail): self
+    {
+        if (!$this->linkTrails->contains($linkTrail)) {
+            $this->linkTrails->add($linkTrail);
+            $linkTrail->setSlopeId($this);
+        }
+    }
+
     public function getPeakHour(): ?\DateTimeInterface
     {
         return $this->Peak_Hour;
@@ -145,6 +178,30 @@ class Slope
         return $this;
     }
 
+
+    public function removeLinkTrail(LinkTrail $linkTrail): self
+    {
+        if ($this->linkTrails->removeElement($linkTrail)) {
+            // set the owning side to null (unless already changed)
+            if ($linkTrail->getSlopeId() === $this) {
+                $linkTrail->setSlopeId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDuration(): ?\DateTimeInterface
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(\DateTimeInterface $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
     public function getSnowQuality(): ?int
     {
         return $this->snow_quality;
@@ -160,5 +217,17 @@ class Slope
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }
