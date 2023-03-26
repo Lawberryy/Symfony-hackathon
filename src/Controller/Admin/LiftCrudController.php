@@ -56,13 +56,15 @@ class LiftCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            AssociationField::new('station')->setRequired(true)->setFormTypeOptions([
+
+            $this->isGranted('ROLE_SU') ? AssociationField::new('station') :
+                AssociationField::new('station')->setRequired(true)->setFormTypeOptions([
                 'query_builder' => function ($er) {
                     return $er->createQueryBuilder('s')
                         ->where('s.owner = :id')
                         ->setParameter('id', $this->getUser()->getId());
-                }
-            ]),
+                }]),
+
             ChoiceField::new("type")->setChoices([
                 'chairlift' => 'chairlift',
                 'gondola' => 'gondola',
@@ -73,8 +75,8 @@ class LiftCrudController extends AbstractCrudController
             TimeField::new('peak_hour')->setFormat('HH:mm'),
             IntegerField::new('comfort')->setHelp('1: no comfort, 5: very comfortable')->setFormTypeOptions(['attr' => ['min' => 1, 'max' => 5]])->hideOnIndex(),
             BooleanField::new('exception'),
+            TimeField::new('duration')->setFormat('HH:mm:ss'),
             TextField::new('exception_message'),
-
         ];
     }
 

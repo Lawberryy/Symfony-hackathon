@@ -54,6 +54,7 @@ class AppFixtures extends Fixture
         $domain = new Domain();
         $domain->setOwner($super_user);
         $domain->setName('Espace Diamant');
+        $domain->setIconUrl('default_domain.png');
         $domain->setDescription('L\'Espace Diamant est un grand domaine skiable regroupant cinq stations et villages de sports d\'hiver français, situé dans les départements de la Savoie et de la Haute-Savoie en région Auvergne-Rhône-Alpes, dans les Alpes françaises.');
 
         $manager->persist($domain);
@@ -70,6 +71,7 @@ class AppFixtures extends Fixture
         foreach ($domains as $domain) {
             for ($i = 1; $i <= 5; $i++) {
                 $station = new Station();
+                $station->setIconUrl('default_station.png');
                 $station->setOwner($users[rand(1, count($users) - 1)]);
                 // on commence à 1 (et non 0) pour éliminer le super user de la liste des owners possibles
                 $station->setDomain($domain);
@@ -112,18 +114,21 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
 
         // let's generate slopes per station
         $stations = $manager->getRepository(Station::class)->findAll();
-
+        $slopeType = ['alpine', 'nordic'];
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(10, 20); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $slope = new Slope();
                 $slope->setStation($station);
                 $slope->setName('Slope ' . $i);
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setDuration(new \DateTime($randomDuration));
                 $slope->setPeakHour(new \DateTime('12:00'));
                 $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
-
+                $slope->setType($slopeType[rand(0, count($slopeType) - 1)]);
+                
                 $manager->persist($slope);
             }
             $manager->flush();
@@ -134,11 +139,13 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
 
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(5, 10); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $lift = new Lift();
                 $lift->setStation($station);
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setDuration(new \DateTime($randomDuration));
                 $lift->setType($liftTypes[rand(0, count($liftTypes) - 1)]);
                 $lift->setPeakHour(new \DateTime('12:30'));
                 $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)

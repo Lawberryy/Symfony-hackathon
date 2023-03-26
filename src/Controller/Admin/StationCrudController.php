@@ -58,13 +58,14 @@ class StationCrudController extends AbstractCrudController
             AssociationField::new("domain")->onlyOnIndex(),
             TextareaField::new('description'),
 
-            AssociationField::new('owner')->setFormTypeOptions([
-                'query_builder' => function (UserRepository $er) use ($owner_id) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.id = :id')
-                        ->setParameter('id', $owner_id);
-                }
-            ])->addCssClass('d-none')->onlyWhenCreating(),
+            $this->isGranted('ROLE_SU') ? AssociationField::new('owner') :
+                AssociationField::new('owner')->setRequired(true)->setFormTypeOptions([
+                    'query_builder' => function (UserRepository $userRepository) use ($owner_id) {
+                        return $userRepository->createQueryBuilder('u')
+                            ->andWhere('u.id = :id')
+                            ->setParameter('id', $owner_id);
+                    }
+                ]),
             ChoiceField::new("weather")->setChoices([
                 'Sunny' => 'sunny',
                 'Snowy' => 'snowy',

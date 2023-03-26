@@ -2,6 +2,7 @@
 ###> symfony/framework-bundle ###
 /.idea/
 !/public/uploads/icons/.gitkeep
+!/public/uploads/icons/default_*.*
 /public/uploads/icons/
 .DS_Store
 /.env.local
