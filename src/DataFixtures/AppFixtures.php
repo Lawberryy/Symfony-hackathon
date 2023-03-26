@@ -66,6 +66,7 @@ class AppFixtures extends Fixture
 
         $weathers = ['sunny', 'snowy', 'cloudy', 'rainy', 'foggy'];
 
+
         foreach ($domains as $domain) {
             for ($i = 1; $i <= 5; $i++) {
                 $station = new Station();
@@ -140,7 +141,7 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
                 $lift->setLastHour(new \DateTime('17:30'));
                 $lift->setType($liftTypes[rand(0, count($liftTypes) - 1)]);
                 $lift->setPeakHour(new \DateTime('12:30'));
-                $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5
+                $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
                 $manager->persist($lift);
             }
             $manager->flush();
