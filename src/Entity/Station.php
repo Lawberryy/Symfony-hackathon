@@ -36,16 +36,23 @@ class Station
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Slope::class)]
     private Collection $slopes;
 
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $weather = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+    #[ORM\OneToMany(mappedBy: 'station', targetEntity: Problem::class)]
+    private Collection $problems;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $notation = null;
 
     public function __construct()
     {
         $this->lifts = new ArrayCollection();
         $this->slopes = new ArrayCollection();
+        $this->problems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +168,7 @@ class Station
         return $this;
     }
 
+
     public function getWeather(): ?string
     {
         return $this->weather;
@@ -169,9 +177,27 @@ class Station
     public function setWeather(?string $weather): self
     {
         $this->weather = $weather;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Problem>
+     */
+    public function getProblems(): Collection
+    {
+        return $this->problems;
+    }
+
+    public function addProblem(Problem $problem): self
+    {
+        if (!$this->problems->contains($problem)) {
+            $this->problems->add($problem);
+            $problem->setStation($this);
+        }
 
         return $this;
     }
+
 
     public function getDescription(): ?string
     {
@@ -181,7 +207,26 @@ class Station
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+        return $this;
+    }
 
+    public function removeProblem(Problem $problem): self
+    {
+        if ($this->problems->removeElement($problem)) {
+            // set the owning side to null (unless already changed)
+            if ($problem->getStation() === $this) {
+                $problem->setStation(null);
+            }
+        }
+
+    public function getNotation(): ?int
+    {
+        return $this->notation;
+    }
+
+    public function setNotation(?int $notation): self
+    {
+        $this->notation = $notation;
         return $this;
     }
 }

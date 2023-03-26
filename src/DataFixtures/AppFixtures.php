@@ -63,6 +63,7 @@ class AppFixtures extends Fixture
         // let's generate 5 specific stations for the domain ('Espace Diamant')
         $domains = $manager->getRepository(Domain::class)->findAll();
         $users = $manager->getRepository(User::class)->findAll();
+
         $weathers = ['sunny', 'snowy', 'cloudy', 'rainy', 'foggy'];
 
         foreach ($domains as $domain) {
@@ -93,6 +94,7 @@ Plus haut, la station présente deux étages supérieurs avec caisses de remont�
                     $station->setName('Praz-sur-Arly');
                     $station->setDescription('Située en Haute-Savoie, dans le Val d’Arly, entre Megève et Flumet, à deux pas du Mont-Blanc, du Beaufortain et des Aravis, la station de ski de Praz sur Arly est implantée à 1035 m d’altitude et connectée à l’Espace Diamant et ses 192 km de pistes. Célèbre pour ses vols en montgolfière et sa base majeure de l’aérostation de montagne, Praz sur Arly cultive également l’authenticité, son patrimoine montagnard et son esprit familial (station labélisée Famille Plus).
 Le départ du domaine skiable de Praz sur Arly, entouré du Crêt du Midi (1884 m) et de Ban Rouge (1983 m), est voisin de celui de Flumet et de Notre Dame de Bellecombe, stations avec lesquelles Praz sur Arly partage le même espace de glisse l’Espace Diamant.');
+
                 }
                 else {
                     $station->setName('Flumet');
@@ -118,6 +120,9 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setPeakHour(new \DateTime('12:00'));
+                $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
+
                 $manager->persist($slope);
             }
             $manager->flush();
@@ -134,6 +139,8 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
                 $lift->setType($liftTypes[rand(0, count($liftTypes) - 1)]);
+                $lift->setPeakHour(new \DateTime('12:30'));
+                $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5
                 $manager->persist($lift);
             }
             $manager->flush();
