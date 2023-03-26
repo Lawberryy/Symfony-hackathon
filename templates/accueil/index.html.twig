@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!
+{% endblock %}
+
+{% block body %}
+	{% for station in stations %}
+		<div class="card">
+			<div class="card-body">
+				<a href="{{ path('app_station_show', { id: station.id }) }}" class="card-title">{{ station.name }}</a>
+			</div>
+		</div>
+	{% endfor %}
+
+	{% for lift in lifts %}
+		<div>
+			<a href="{{ path('app_lift_show', { id: lift.id }) }}" class="card-title">{{ lift.name }}</a>
+		</div>
+
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .history{
+        overflow: auto;
+        margin: 20px;
+        background: #ffffff;
+        position: relative;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .history form{
+        padding: 20px;
+        background: #4B5F6D;
+        display: block;
+        width: 100%;
+    }
+
+    .history form input{
+        user-focus: none;
+        outline: none;
+        padding: 10px;
+        border: none;
+        display: block;
+        width: 100%;
+    }
+
+    .history .message-container{
+        height: 400px;
+        overflow: auto;
+    }
+
+    .message-container::-webkit-scrollbar {
+        width: 10px;
+    }
+    .message-container::-webkit-scrollbar-thumb {
+        background: #4B5F6D;
+        border-radius: 10px;
+    }
+
+    .message{
+        background: #fff;
+        padding: 20px;
+        border-top: 1px solid #eee;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .message:nth-of-type(2n){
+        background: #f5f5f5;
+    }
+
+    .message .user{
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .message .text{
+        flex: 1;
+    }
+
+    .message .date{
+        font-size: 12px;
+        color: #0c007e;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Chat Global</h1>
+    <h3>Discutez avec les autres skieurs parmi les domaines !</h3>
+
+    <div class="history">
+        <div class="message-container">
+            {% for chat in chatHistory  %}
+                <div class="message">
+                    <span class="user">{{ chat.sender.firstname }} {{ chat.sender.lastname }}</span>
+                    <span class="text">{{ chat.message }}</span>
+                    <span class="date">{{ chat.sentat.timestamp }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <form action="#">
+            <input type="text" name="message" placeholder="Ecrivez votre message" autocomplete="off">
+        </form>
+    </div>
+    <script>
+        const socket = new WebSocket("ws://localhost:3001");
+        socket.onopen = function(e) {
+            console.log("Connection established!");
+        };
+
+        socket.onmessage = function(event) {
+            console.log(event.data);
+        };
+
+        socket.onclose = function(event) {
+            if (event.wasClean) {
+                alert('Connection closed');
+            } else {
+                alert('Connection broken');
+            }
+            alert('Code: ' + event.code + ' reason: ' + event.reason);
+        };
+
+        socket.onerror = function(error) {
+            alert("Error " + error.message);
+        };
+    </script> <!-- Script pour la connexion au websocket -->
+    <script>
+        //changer les timestamp en date locale
+        const dateOptions = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        }
+
+        document.querySelectorAll(".date").forEach(function (date) {
+            date.innerHTML = new Date(date.innerHTML*1000).toLocaleString("fr-FR", dateOptions);
+        });
+
+
+        const form = document.querySelector('form');
+        const input = document.querySelector('input');
+        const history = document.querySelector('.message-container');
+
+        //scroller tout en bas de history
+        history.scrollTop = history.scrollHeight;
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let data = {
+                message: input.value,
+                sender: {{ app.user.id }},
+                display_name : '{{ app.user.firstName ~ ' ' ~ app.user.lastName }}',
+                sent_at: Date.now()/1000
+            }
+            socket.send(JSON.stringify(data));
+            input.value = '';
+        });
+
+        socket.addEventListener('message', function (e) {
+            const message = document.createElement('div');
+            message.classList.add('message');
+            const data = JSON.parse(e.data);
+            message.innerHTML = `
+                <span class="user">${data.display_name}</span>
+                <span class="text">${data.message}</span>
+                <span class="date">${new Date(data.sent_at*1000).toLocaleString("fr-FR", dateOptions)}</span>
+            `;
+            history.appendChild(message);
+            history.scrollTop = history.scrollHeight;
+        });
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lift index{% endblock %}
+
+{% block body %}
+    <h1>Lift index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>First_hour</th>
+                <th>Last_hour</th>
+                <th>Exception</th>
+                <th>Exception_message</th>
+                <th>Peak_Hour</th>
+                <th>Comfort</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lift in lifts %}
+            <tr>
+                <td>{{ lift.id }}</td>
+                <td>{{ lift.name }}</td>
+                <td>{{ lift.firstHour ? lift.firstHour|date('H:i:s') : '' }}</td>
+                <td>{{ lift.lastHour ? lift.lastHour|date('H:i:s') : '' }}</td>
+                <td>{{ lift.exception ? 'Yes' : 'No' }}</td>
+                <td>{{ lift.exceptionMessage }}</td>
+                <td>{{ lift.PeakHour ? lift.PeakHour|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ lift.comfort }}</td>
+                <td>
+                    <a href="{{ path('app_lift_show', {'id': lift.id}) }}">show</a>
+                    <a href="{{ path('app_lift_edit', {'id': lift.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lift_new') }}">Create new</a>
+{% endblock %}

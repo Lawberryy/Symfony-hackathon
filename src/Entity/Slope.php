@@ -38,6 +38,7 @@ class Slope
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
 
+
     #[ORM\OneToMany(mappedBy: 'slope_id', targetEntity: LinkTrail::class)]
     private Collection $linkTrails;
 
@@ -48,6 +49,13 @@ class Slope
     {
         $this->linkTrails = new ArrayCollection();
     }
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $Peak_Hour = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $snow_quality = null;
+
 
     public function getId(): ?int
     {
@@ -138,6 +146,7 @@ class Slope
         return $this;
     }
 
+
     /**
      * @return Collection<int, LinkTrail>
      */
@@ -153,8 +162,18 @@ class Slope
             $linkTrail->setSlopeId($this);
         }
 
+    public function getPeakHour(): ?\DateTimeInterface
+    {
+        return $this->Peak_Hour;
+    }
+
+    public function setPeakHour(?\DateTimeInterface $Peak_Hour): self
+    {
+        $this->Peak_Hour = $Peak_Hour;
+
         return $this;
     }
+
 
     public function removeLinkTrail(LinkTrail $linkTrail): self
     {
@@ -178,5 +197,21 @@ class Slope
         $this->duration = $duration;
 
         return $this;
+    }
+    public function getSnowQuality(): ?int
+    {
+        return $this->snow_quality;
+    }
+
+    public function setSnowQuality(?int $snow_quality): self
+    {
+        $this->snow_quality = $snow_quality;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
