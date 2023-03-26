@@ -9,20 +9,42 @@
 
     <section class="lift-first-section">
         <h1 class="card-name-test"> {{ lift.name }}! </h1>
-        <button class="btn-station">accedez au infos de la station</button>
+        <a class="btn-station" href="{{ path('app_station_show', {'id': lift.station.id}) }}">accedez au infos de la station</a>
 
 
     </section>
     <section class="lift-data-section">
 
-        <h2>{{ message }}</h2>
-        <h2>{{ messageValue }}</h2>
 
 
 
 
+
+
+    {% if lift.exception == true %}
+        <div class="closed-div">
+            <h1 class="closed"> fermé </h1>
+            <h2 class="exeption_message"> {{  exception_message }} </h2>
+
+        </div>
+
+    {% else %}
+        <div>
+            <h2>{{ message }} : </h2>
+            <h2>{{ messageValue }}</h2>
+        </div>
+    <div>
+        <h2> confort :</h2>
 
         <h2>{{ lift.comfort }} / 10</h2>
+    </div>
+
+    {% endif %}
+
+
+
+
+
 
     </section>
 
@@ -33,6 +55,36 @@
 
 
     <style>
+.closed {
+    text-transform: uppercase;
+            color: red;
+            margin-bottom: 150px;
+            font-weight: bold;
+            font-size: 50px;
+    width: 100%;
+
+    border: 4px double red ;
+    text-align: center;
+
+        }
+.closed-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+
+
+
+
+
+}
+        .exeption_message {
+            color: black;
+            margin-bottom: 150px;
+            font-weight: bold;
+            font-size: 50px;
+        }
         .container{
             display: flex;
             flex-direction: row;
@@ -81,18 +133,27 @@
             border-radius: 4px;
             padding: 12px 0;
             width: 150px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
+            text-decoration: none;
+            text-align: center;
         }
         .btn-station:hover {
             background-color: #0054D2;
         }
 
         .lift-data-section{
+            padding: 40px 0;
             height: 70vh;
             width: 40%;
 
+
+            background: url("/assets/img/activitée/ski-de-fond.jpg") ;
+
+            background-size: cover;
+            background-repeat:   no-repeat;
+            background-position: center center;
 
 
 
@@ -100,7 +161,8 @@
             flex-direction: column;
 
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
+
 
         }
     </style>

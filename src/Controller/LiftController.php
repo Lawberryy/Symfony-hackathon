@@ -59,6 +59,7 @@ class LiftController extends AbstractController
             'message' => $messageTxt,
             "messageValue" => $messageValue,
             'station_id' => $station_id,
+            'exception_message'=> $lift->getExceptionMessage(),
 
         ]);
     }
