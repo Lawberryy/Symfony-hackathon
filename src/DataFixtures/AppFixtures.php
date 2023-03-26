@@ -112,7 +112,7 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
 
         // let's generate slopes per station
         $stations = $manager->getRepository(Station::class)->findAll();
-
+        $slopeType = ['alpine', 'nordic'];
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(10, 20); $i++) {
                 $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
@@ -125,6 +125,7 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
                 $slope->setDuration(new \DateTime($randomDuration));
                 $slope->setPeakHour(new \DateTime('12:00'));
                 $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
+                $slope->setType($slopeType[rand(0, count($slopeType) - 1)]);
                 
                 $manager->persist($slope);
             }

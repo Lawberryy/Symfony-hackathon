@@ -73,6 +73,7 @@ class LiftCrudController extends AbstractCrudController
             TimeField::new('peak_hour')->setFormat('HH:mm'),
             IntegerField::new('comfort')->setHelp('1: no comfort, 5: very comfortable')->setFormTypeOptions(['attr' => ['min' => 1, 'max' => 5]])->hideOnIndex(),
             BooleanField::new('exception'),
+            TimeField::new('duration')->setFormat('HH:mm:ss'),
             TextField::new('exception_message'),
         ];
     }
