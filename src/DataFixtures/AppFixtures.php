@@ -54,6 +54,7 @@ class AppFixtures extends Fixture
         $domain = new Domain();
         $domain->setOwner($super_user);
         $domain->setName('Espace Diamant');
+        $domain->setIconUrl('default_domain.png');
         $domain->setDescription('L\'Espace Diamant est un grand domaine skiable regroupant cinq stations et villages de sports d\'hiver français, situé dans les départements de la Savoie et de la Haute-Savoie en région Auvergne-Rhône-Alpes, dans les Alpes françaises.');
 
         $manager->persist($domain);
@@ -70,6 +71,7 @@ class AppFixtures extends Fixture
         foreach ($domains as $domain) {
             for ($i = 1; $i <= 5; $i++) {
                 $station = new Station();
+                $station->setIconUrl('default_station.png');
                 $station->setOwner($users[rand(1, count($users) - 1)]);
                 // on commence à 1 (et non 0) pour éliminer le super user de la liste des owners possibles
                 $station->setDomain($domain);
