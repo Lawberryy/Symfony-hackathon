@@ -51,10 +51,13 @@ class DashboardController extends AbstractDashboardController
         }
         yield MenuItem::section('Admin');
         yield MenuItem::linkToCrud('Station', 'fa fa-snowflake-o', Station::class);
-        //si l'utilisateur n'a aucune station, on ne lui affiche pas le menu
         if ($this->authChecker->isGranted('ROLE_ADMIN') && $this->getUser()->getStations()->count() > 0 || $this->authChecker->isGranted('ROLE_SU')) {
-            yield MenuItem::linkToCrud('Lift', 'fa fa-elevator', Lift::class);
-            yield MenuItem::linkToCrud('Slope', 'fa fa-person-skiing', Slope::class);
+            yield MenuItem::subMenu('More...')
+                ->setSubItems([
+                    MenuItem::linkToCrud('Slopes', 'fa fa-snowflake-o', Slope::class),
+                    MenuItem::linkToCrud('Lifts', 'fa fa-snowflake-o', Lift::class),
+                ]);
+
         }
         if ($problemRepository->count([]) > 0) {
             yield MenuItem::linkToCrud('Problèmes', 'fas fa-list', Problem::class);

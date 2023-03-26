@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -64,6 +65,13 @@ class StationCrudController extends AbstractCrudController
                         ->setParameter('id', $owner_id);
                 }
             ])->addCssClass('d-none')->onlyWhenCreating(),
+            ChoiceField::new("weather")->setChoices([
+                'Sunny' => 'sunny',
+                'Snowy' => 'snowy',
+                'Cloudy'=> 'cloudy',
+                'Rainy' => 'rainy',
+                'Foggy' => 'foggy'
+            ]),
             AssociationField::new("lifts")->hideWhenCreating()->autocomplete(),
             AssociationField::new("slopes")->hideWhenCreating()->autocomplete(),
         ];
