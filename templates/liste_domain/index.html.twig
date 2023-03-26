@@ -38,6 +38,13 @@
         height: 100%;
     }
 
+    .card_domain img.domain-icon {
+        width: 100px;
+        height: 100px;
+        position: static !important;
+        object-fit: contain;
+    }
+
     .card_domain .content {
         height: 80%;
         width: 60%;
@@ -142,6 +149,7 @@
             height: 50%;
         }
 
+
         .card_domain .content {
             height: 50%;
             width: 100%;
@@ -190,6 +198,7 @@
     {% for domain in domains %}
     <div class="card_domain">
         <div class="content">
+            <img class="domain-icon" src="{{ asset('/uploads/icons/default_domain.png') }}" alt="">
             <h3> {{ domain.name }} </h3>
             <p>{{ domain.description }} </p>
             <a href="{{ path('app_domain_show', {'id': domain.id}) }}">En savoir plus</a>
