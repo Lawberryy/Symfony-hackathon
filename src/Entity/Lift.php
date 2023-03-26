@@ -23,8 +23,10 @@ class Lift
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 	
-	#[ORM\Column(type: Types::TIME_MUTABLE)]
-             private ?\DateTimeInterface $first_hour = null;
+
+	  #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $first_hour = null;
+
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $last_hour = null;
@@ -34,6 +36,7 @@ class Lift
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
+
 
     #[ORM\OneToMany(mappedBy: 'lift_id', targetEntity: LinkTrail::class)]
     private Collection $linkTrails;
@@ -45,6 +48,18 @@ class Lift
     {
         $this->linkTrails = new ArrayCollection();
     }
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $Peak_Hour = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $comfort = null;
+
+
 
     public function getId(): ?int
     {
@@ -76,16 +91,18 @@ class Lift
     }
 	
 	public function getFirstHour(): ?\DateTimeInterface
-                                 	{
-                                 		return $this->first_hour;
-                                 	}
+
+         	{
+         		return $this->first_hour;
+         	}
 	
 	public function setFirstHour(\DateTimeInterface $first_hour): self
-                                 	{
-                                 		$this->first_hour = $first_hour;
-                                 		
-                                 		return $this;
-                                 	}
+         	{
+         		$this->first_hour = $first_hour;
+         		
+         		return $this;
+         	}
+
 
     public function getLastHour(): ?\DateTimeInterface
     {
@@ -123,6 +140,7 @@ class Lift
         return $this;
     }
 
+
     /**
      * @return Collection<int, LinkTrail>
      */
@@ -150,8 +168,29 @@ class Lift
             }
         }
 
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
         return $this;
     }
+    public function getPeakHour(): ?\DateTimeInterface
+    {
+        return $this->Peak_Hour;
+    }
+
+    public function setPeakHour(?\DateTimeInterface $Peak_Hour): self
+    {
+        $this->Peak_Hour = $Peak_Hour;
+
+
+        return $this;
+    }
+
 
     public function getDuration(): ?\DateTimeInterface
     {
@@ -163,5 +202,22 @@ class Lift
         $this->duration = $duration;
 
         return $this;
+    }
+
+    public function getComfort(): ?int
+    {
+        return $this->comfort;
+    }
+
+    public function setComfort(?int $comfort): self
+    {
+        $this->comfort = $comfort;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
