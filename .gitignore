@@ -1,6 +1,6 @@
 
 ###> symfony/framework-bundle ###
-.idea/
+/.idea/
 !/public/uploads/icons/.gitkeep
 /public/uploads/icons/
 .DS_Store
