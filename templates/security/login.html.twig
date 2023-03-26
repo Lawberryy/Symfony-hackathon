@@ -10,9 +10,14 @@
             font-weight: 400;
             font-style: normal;
         }
-        .login-body {height: 100vh; width: 100%; display: flex; position: relative}
+        .login-body {
+            width: 100%;
+            display: flex;
+            position: relative;
+            background: url("assets/images/login-background-logo.png") no-repeat right;
+        }
 
-        .login-left-div {
+        .login-r-div {
             width: 50%;
             padding-top: 13vh;
             z-index: 3;
@@ -65,22 +70,23 @@
             z-index: 2;
         }
 
-        .login-right-div {
+        .login-l-div {
             width: 50%;
-            background: url("assets/images/login-background-img.png") repeat-y top;
+            background: url("assets/images/login-background-img.png") no-repeat center;
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             z-index: 1;
+            height: 100vh;
         }
-        .login-right-div div {
+        .login-l-div div {
             display: flex;
             flex-direction: column;
             gap: 8.7vh;
         }
-        .login-right-div span {
+        .login-l-div span {
             font-size: 55px;
             font-weight: 600;
             color: #FFFFFF;
@@ -88,7 +94,7 @@
             text-align: center;
             text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
-        .login-right-div button {
+        .login-l-div button {
             font-size: 15px;
             background-color: #DB2828;
             color: #FFFFFF;
@@ -98,40 +104,37 @@
             margin: 0 10%;
             cursor: pointer;
         }
-        .background-logo {position: absolute; top: 0; right: 0; height: 100vh;}
 
         /* responsive */
         @media screen and (max-width: 1400px) {
-            .login-left-div {
+            .login-r-div {
                 padding-top: 10vh;
             }
-        }
-        @media screen and (max-width: 1200px) {
             .div-logo img {
                 width: 280px;
             }
         }
+
         /* mobile screen */
         @media screen and (max-width: 767px) {
             .login-body {
                 flex-direction: column-reverse;
                 gap: 50px;
             }
-            .login-left-div, .login-right-div {width: 100%;}
-            .login-left-div {
+            .login-r-div, .login-l-div {width: 100%;}
+            .login-r-div {
                 padding-top: 150px;
             }
-            .login-right-div {padding: 40px 0;}
+            .login-l-div {padding: 40px 0; height: auto;}
+            .div-logo {height: auto;}
             .div-logo img {
                 width: 250px;
-                position: absolute;
-                left: 0;
             }
         }
     </style>
 
     <main class="login-body">
-        <div class="login-right-div">
+        <div class="login-l-div">
             <div>
                 <span class="oswald">Vers l'infini...<br> et la montagne</span>
                 <a href="{{ path('app_register') }}"><button class="oswald">Pas de compte ? Inscris-toi</button></a>
@@ -140,7 +143,7 @@
 
         <div class="div-logo"><img src="assets/images/logo.png" alt="logo ça glisse" class="logo"></div>
 
-        <div class="login-left-div oswald">
+        <div class="login-r-div oswald">
             <div class="login-child-div">
                 <div class="login-title">
                     <h1 class="oswald login-h1">Connexion</h1>
@@ -159,11 +162,11 @@
 
                     <div class="div-email">
                         <label for="inputEmail">Email</label>
-                        <input class="form-control widget email" type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+                        <input class="form-control widget email" type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Email" autocomplete="email" required autofocus>
                     </div>
                     <div class="div-pw">
                         <label for="inputPassword">Mot de passe</label>
-                        <input class="form-control widget pw" type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+                        <input class="form-control widget pw" type="password" name="password" id="inputPassword" placeholder="Mot de passe" autocomplete="current-password" required>
                     </div>
 
                     <input type="hidden" name="_csrf_token"
@@ -187,8 +190,6 @@
                 </form>
             </div>
         </div>
-
-        <img class="background-logo" src="assets/images/login-background-logo.png" alt="background logo">
     </main>
 
 {% endblock %}
