@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyTrailsController!{% endblock %}
+
+{% block body %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color : black;
+        font-family: 'Oswald', sans-serif;
+    }
+
+    h1{
+        text-align: center;
+        font-size: 42px;
+        margin: 10px;
+        color: white;
+    }
+
+    body {
+        background-image: url("../backgroundTrail.jpg");
+        background-size: 150%;
+        background-repeat: no-repeat;
+    }
+
+    .showParcours{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+
+
+    .allMyTrails {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 85%;
+        border-radius: 16px;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(2px);
+        padding: 20px;
+    }
+
+    .oneTrail{
+        margin: auto;
+        text-align:center;
+        margin-top: 20px;
+    }
+
+    .oneTrail > div{
+        display:flex;
+        flex-direction: column;
+        margin-top: 8px;
+        gap: 5px;
+    }
+
+    .apercu{
+        display:flex;
+        flex-direction: column;
+    }
+
+
+</style>
+
+<section class="showParcours">
+    <h1>Mes parcours créés</h1>
+    <div class="allMyTrails">
+        {% for Trail in Trails %}
+            {% set i = loop.index %}
+            <div class="oneTrail">
+                <h2>{{Trail.name}}</h2>
+                <span> Temps total : {{Trail.totalDuration|date("i:s")}}</span>
+                <div>
+                    <b>Aperçu</b>
+                    <div class="apercu">
+                        {% for element in trailsStart[i - 1] %}
+                            {% if element.liftid == null %}
+                                <span>{{element.slopeid.name}}</span>
+                            {% else %}
+                                <span>{{element.liftid.name}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    <div>
+</section>
+{% endblock %}
