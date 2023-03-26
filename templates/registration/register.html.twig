@@ -15,6 +15,8 @@
         .signup-left-div {
             width: 50%;
             padding-top: 13vh;
+            position: relative;
+            z-index: 3;
         }
         .signup-child-div {
             width: 80%;
@@ -41,6 +43,9 @@
             font-weight: 500;
             cursor: pointer;
         }
+        .btn-signup:hover {
+            background-color: #0054D2;
+        }
         .blue {color: #0054D2; cursor: pointer;}
         .widget input {
             padding: 10px;
@@ -50,8 +55,7 @@
             font-weight: 300;
             color: #4B5F6D;
         }
-        /* .widget input::placeholder {font-size: 16px; font-weight: 300; opacity: 1; color: #4B5F6D;} */
-        .fn-ln {display: flex; width: 100%; gap: 10%;}
+        .fn-ln {display: flex; width: 100%; gap: 10%;z-index: 1; position: relative;}
         .fn {width: 40%;}
         .ln {width: 50%;}
         .fn input, .ln input {width: 100%;}
@@ -64,6 +68,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            z-index: 2;
         }
 
         .signup-right-div {
@@ -73,6 +78,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
         .signup-right-div div {
             display: flex;
@@ -97,6 +104,7 @@
             margin: 0 10%;
             cursor: pointer;
         }
+        .background-logo {position: absolute; top: 0; left: 0; height: 100vh;}
 
         /* responsive */
         @media screen and (max-width: 1400px) {
@@ -134,7 +142,7 @@
                     <h1 class="oswald signup-h1">Inscription</h1>
                 </div>
                 <div class="signup-form">
-                    <div>{{ form_start(registrationForm) }}</div>
+                    {{ form_start(registrationForm) }}
                     <div class="fn-ln">
                         <div class="widget ln">{{ form_row(registrationForm.lastname, {label: 'Nom'}) }}</div>
                         <div class="widget fn">{{ form_row(registrationForm.firstname, {label: 'Prénom'}) }}</div>
@@ -163,8 +171,10 @@
         <div class="signup-right-div">
             <div>
                 <span class="oswald">Vers l'infini...<br> et la montagne</span>
-                <button class="oswald">Déjà un compte ? Connecte-toi</button>
+                <a href="{{ path('app_login') }}"><button class="oswald">Déjà un compte ? Connecte-toi</button></a>
             </div>
         </div>
+
+        <img class="background-logo" src="assets/images/signup-background-logo.png" alt="background logo">
     </main>
 {% endblock %}
