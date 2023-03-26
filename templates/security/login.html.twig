@@ -108,6 +108,7 @@
             cursor: pointer;
         }
 
+
         /* responsive */
         @media screen and (max-width: 1400px) {
             .login-r-div {
@@ -142,6 +143,8 @@
                 <span class="oswald">Vers l'infini...<br> et la montagne</span>
                 <a href="{{ path('app_register') }}"><button class="oswald">Pas de compte ? Inscris-toi</button></a>
             </div>
+
+            {% include "_partials/_snowfall.html.twig" %}
         </div>
 
         <div class="div-logo"><img src="assets/images/logo.png" alt="logo ça glisse" class="logo"></div>

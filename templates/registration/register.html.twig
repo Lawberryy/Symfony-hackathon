@@ -10,6 +10,7 @@
             font-weight: 400;
             font-style: normal;
         }
+        header {display: none;}
         .signup-body {width: 100%; display: flex; position: relative; background: url("assets/images/signup-background-logo.png") no-repeat left;}
 
         .signup-left-div {
@@ -78,14 +79,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 1;
             height: 100vh;
         }
-        .signup-right-div div {
+        .signup-right-div div:first-child {
             display: flex;
             flex-direction: column;
             gap: 8.7vh;
+            position: relative;
+            z-index: 1;
         }
         .signup-right-div span {
             font-size: 55px;
@@ -105,8 +106,6 @@
             margin: 0 10%;
             cursor: pointer;
         }
-
-        header {display: none;}
 
         /* responsive */
         @media screen and (max-width: 1400px) {
@@ -175,6 +174,8 @@
                 <span class="oswald">Vers l'infini...<br> et la montagne</span>
                 <a href="{{ path('app_login') }}"><button class="oswald">Déjà un compte ? Connecte-toi</button></a>
             </div>
+
+            {% include "_partials/_snowfall.html.twig" %}
         </div>
     </main>
 {% endblock %}
