@@ -183,9 +183,18 @@
 
         </div>
         <ul class="nav-links">
-            <li><a href="#">DOMAINES</a></li>
+            <li><a href="{{ path('app_liste_domain')}}">DOMAINES</a></li>
             <li><a href="#">STATIONS</a></li>
-            <li><a href="#">MON COMPTE</a></li>
+            {% if app.user %}
+                {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SU' in app.user.roles %}
+                    <li><a href="{{ path('admin')}}">ADMIN</a></li>
+                {% else %}
+                    <li><a href="#">MON COMPTE</a></li>
+                {% endif %}
+                <li><a href="{{ path('app_logout')}}">ME DECONNECTER</a></li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">SE CONNECTER</a></li>
+            {% endif %}
         </ul>
         <div class="burger">
             <div class="line1"></div>
