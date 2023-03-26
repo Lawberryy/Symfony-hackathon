@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class StationCrudController extends AbstractCrudController
@@ -22,7 +23,10 @@ class StationCrudController extends AbstractCrudController
         return [
             TextField::new('name'),
             TextField::new('description'),
-            TextField::new('icon_url'),
+            ImageField::new('icon_url')
+                ->setBasePath('uploads/icons')
+                ->setUploadDir('public/uploads/icons')
+                ->setUploadedFileNamePattern('StationIcon[randomhash].[extension]'),
             AssociationField::new('owner')->setFormTypeOptions([
                 'query_builder' => function (UserRepository $er) use ($owner_id) {
                     return $er->createQueryBuilder('u')

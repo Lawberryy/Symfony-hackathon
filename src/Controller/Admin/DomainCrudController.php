@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -35,7 +36,10 @@ class DomainCrudController extends AbstractCrudController
         return [
             TextField::new('name'),
             TextField::new('description'),
-            TextField::new('icon_url'),
+            ImageField::new('icon_url')
+                ->setBasePath('uploads/icons')
+                ->setUploadDir('public/uploads/icons')
+                ->setUploadedFileNamePattern('DomainIcon[randomhash].[extension]'),
             AssociationField::new('owner')->setFormTypeOptions([
                 'query_builder' => function (UserRepository $er) use ($owner_id) {
                     return $er->createQueryBuilder('u')
