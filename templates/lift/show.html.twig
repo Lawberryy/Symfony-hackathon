@@ -10,7 +10,7 @@
         <section class="lift-first-section">
 
             <h1 class="card-name-test"> {{ lift.name }}! </h1>
-            <a class="btn-station" href="{{ path('app_station_show', {'id': lift.station.id}) }}">accedez au infos de la
+            <a class="btn-station" href="{{ path('app_station_show', {'id': lift.station.id}) }}">Accedez aux infos de la
                 station</a>
 
 
@@ -92,6 +92,9 @@
             margin-bottom: 150px;
             font-weight: bold;
             font-size: 50px;
+            background-color: white;
+            opacity: 0.8;
+
         }
 
         .container {
@@ -135,6 +138,7 @@
             padding: 10px;
             border-radius: 5px;
             text-align: center;
+            font-size: 75px;
 
         }
 
@@ -178,6 +182,50 @@
 
 
         }
+
+
+        @media only screen and (max-width : 1224px){
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+
+                height: 140vh;
+                width: 100vw;
+            }
+            .lift-data-section {
+                margin-top: 50px;
+                padding: 40px 0;
+                height: 70vh;
+                width: 70%;
+
+
+                background: url("/assets/img/activitée/ski-de-fond.jpg");
+
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+
+
+                display: flex;
+                flex-direction: column;
+
+                align-items: center;
+                justify-content: space-between;
+
+
+            }
+            .lift-first-section {
+                margin-top: 20px;
+
+                height: 70vh;
+                width: 70%;
+
+
+            }
+        }
+
     </style>
 
 {% endblock %}
