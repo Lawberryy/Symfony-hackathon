@@ -161,6 +161,7 @@ class Slope
             $this->linkTrails->add($linkTrail);
             $linkTrail->setSlopeId($this);
         }
+    }
 
     public function getPeakHour(): ?\DateTimeInterface
     {

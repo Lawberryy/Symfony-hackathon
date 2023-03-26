@@ -167,6 +167,7 @@ class Lift
                 $linkTrail->setLiftId(null);
             }
         }
+    }
 
     public function getType(): ?string
     {
@@ -186,8 +187,6 @@ class Lift
     public function setPeakHour(?\DateTimeInterface $Peak_Hour): self
     {
         $this->Peak_Hour = $Peak_Hour;
-
-
         return $this;
     }
 
