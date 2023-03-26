@@ -1,17 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LiftController!
+{% block title %}{{ lift.name }}
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
-
-
-    <h1>{{ lift.name }}</h1>
-    <h2>{{ message }}</h2>
-    <h2>{{ heureTest }}</h2>
-
 
         <section class="lift-first-section">
 
@@ -56,7 +50,29 @@
 
     </div>
 
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
 
+                <th>Heure d'ouverture</th>
+                <th>Heure de fermeture</th>
+                <th>Heure de pointe</th>
+                <th>Temps moyen de descente</th>
+                <th>Type de piste</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+                <td>{{ lift.firstHour|date('H:m') }}</td>
+                <td>{{ lift.lastHour|date('H:m') }}</td>
+                <td>{{ lift.peakHour|date('H:m') }}</td>
+                <td></td>
+                <td>{{ lift.type }}</td>
+            </tbody>
+        </table>
+    </div>
 
 
 
@@ -187,6 +203,22 @@
             justify-content: space-between;
 
 
+        }
+
+        /* Style pour le tableau */
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2
         }
 
 
