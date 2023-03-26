@@ -8,6 +8,7 @@ use App\Controller\SecurityController;
 use App\Repository\LiftRepository;
 use App\Repository\SlopeRepository;
 use App\Repository\TrailRepository;
+use App\Repository\StationRepository;
 use App\Repository\LinkTrailRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,6 +30,7 @@ class CreateTrailController extends AbstractController
     public function index(
         LiftRepository $liftRepository,
         SlopeRepository $slopeRepository,
+        StationRepository $stationRepository,
         TrailRepository $TrailRepository,
         EntityManagerInterface $entityManager,
         LinkTrailRepository $LinkTrail,
@@ -36,9 +38,17 @@ class CreateTrailController extends AbstractController
     ): Response
     {
 
+        if(!isset($_GET['station']) || $_GET['station'] == 0) {
+            $station = $stationRepository->findAll()[0];
+        } else {
+            $station = $_GET['station'];
+        }
+
+        $station = $stationRepository->findBy(['id' => $station])[0];
+
         // Get lifts from staion 1
-        $allLifts = $liftRepository->findBy(['station' => 21]);
-        $allSlopes = $slopeRepository->findBy(['station' => 21]);
+        $allLifts = $liftRepository->findBy(['station' => $station->getId()]);
+        $allSlopes = $slopeRepository->findBy(['station' => $station->getId()]);
 
 
         $arrayLifts = [];
@@ -72,6 +82,18 @@ class CreateTrailController extends AbstractController
         $formTrail = $this->createFormBuilder()
             ->add('TrailName', TextType::class, [
                 'attr' => ['class' => 'form-control']
+            ])
+            ->getForm();
+
+        $formChangeStation = $this->createFormBuilder()
+            ->add('changeStation', ChoiceType::class, [
+                'choices' => $stationRepository->findAll(),
+                'choice_label' => function ($station) {
+                    return $station->getName();
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'attr' => ['class' => 'form-select']
             ])
             ->getForm();
 
@@ -110,6 +132,7 @@ class CreateTrailController extends AbstractController
         $formLift->handleRequest($request);
         $formSlope->handleRequest($request);
         $formTrail->handleRequest($request);
+        $formChangeStation->handleRequest($request);
         if ($formLift->isSubmitted() && $formLift->isValid()) {
             $data = $formLift->getData();
 
@@ -165,6 +188,12 @@ class CreateTrailController extends AbstractController
             return $this->redirectToRoute('app_create_trail');
         }
 
+        if ($formChangeStation->isSubmitted() && $formChangeStation->isValid()) {
+            $data = $formChangeStation->getData();
+
+            return $this->redirectToRoute('app_create_trail', ['station' => $data['changeStation']->getId()]);
+        }
+
         return $this->render('create_trail/index.html.twig', [
             'controller_name' => 'CreateTrailController',
             'lifts' => $allLifts,
@@ -174,6 +203,7 @@ class CreateTrailController extends AbstractController
             'formLift' => $formLift->createView(),
             'formSlope' => $formSlope->createView(),
             'formTrail' => $formTrail->createView(),
+            'formChangeStation' => $formChangeStation->createView(),
         ]);
     }
 }
