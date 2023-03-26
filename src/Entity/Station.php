@@ -230,4 +230,9 @@ class Station
         $this->notation = $notation;
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }
