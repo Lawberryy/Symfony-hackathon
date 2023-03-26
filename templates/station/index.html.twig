@@ -1,41 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Station index{% endblock %}
+{% block title %}Hello StationController!
+{% endblock %}
 
 {% block body %}
-    <h1>Station index</h1>
+	<h1>Hello
+		{{ controller_name }}! ✅</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Icon_url</th>
-                <th>Notation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for station in stations %}
-            <tr>
-                <td>{{ station.id }}</td>
-                <td>{{ station.name }}</td>
-                <td>{{ station.description }}</td>
-                <td>{{ station.iconUrl }}</td>
-                <td>{{ station.notation }}</td>
-                <td>
-                    <a href="{{ path('app_station_show', {'id': station.id}) }}">show</a>
-                    <a href="{{ path('app_station_edit', {'id': station.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<form method="POST">
+		<label for="title">Title:</label>
+		<input type="text" id="title" name="title"><br><br>
 
-    <a href="{{ path('app_station_new') }}">Create new</a>
+		<label for="description">Description:</label>
+		<textarea id="description" name="description"></textarea><br><br>
+
+		<label for="datetime">Date/Time:</label>
+		<input type="datetime-local" id="datetime" name="datetime"><br><br>
+
+		<input type="submit" value="Submit">
+	</form>
 {% endblock %}

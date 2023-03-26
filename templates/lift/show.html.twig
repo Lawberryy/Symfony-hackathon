@@ -1,50 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lift{% endblock %}
+{% block title %}Hello LiftController!
+{% endblock %}
 
 {% block body %}
-    <h1>Lift</h1>
+	<h1>Hello
+		{{ lift.name }}! ✅</h1>
+	<h2>{{ message }}</h2>
+	<h2>{{ heureTest }}</h2>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ lift.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ lift.name }}</td>
-            </tr>
-            <tr>
-                <th>First_hour</th>
-                <td>{{ lift.firstHour ? lift.firstHour|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Last_hour</th>
-                <td>{{ lift.lastHour ? lift.lastHour|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Exception</th>
-                <td>{{ lift.exception ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Exception_message</th>
-                <td>{{ lift.exceptionMessage }}</td>
-            </tr>
-            <tr>
-                <th>Peak_Hour</th>
-                <td>{{ lift.PeakHour ? lift.PeakHour|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Comfort</th>
-                <td>{{ lift.comfort }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_lift_index') }}">back to list</a>
-
-    <a href="{{ path('app_lift_edit', {'id': lift.id}) }}">edit</a>
-
-    {{ include('lift/_delete_form.html.twig') }}
 {% endblock %}
