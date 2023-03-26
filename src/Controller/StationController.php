@@ -2,77 +2,62 @@
 
 namespace App\Controller;
 
-use App\Entity\Station;
-use App\Form\StationType;
-use App\Repository\StationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Station;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Problem;
+use App\Repository\ProblemRepository;
+use App\Repository\LiftRepository;
+use App\Entity\Lift;
 
-#[Route('/station')]
+
 class StationController extends AbstractController
 {
-    #[Route('/', name: 'app_station_index', methods: ['GET'])]
-    public function index(StationRepository $stationRepository): Response
+    #[Route('/station/{id}', name: 'app_station_show')]
+    public function show(Request $request, Station $station, EntityManagerInterface $entityManager, ProblemRepository $problems, LiftRepository $liftRepository): Response
     {
-        return $this->render('station/index.html.twig', [
-            'stations' => $stationRepository->findAll(),
-        ]);
-    }
+        $form = $this->createFormBuilder()
+            ->add('title', TextType::class)
+            ->add('description', TextareaType::class)
+            ->getForm();
 
-    #[Route('/new', name: 'app_station_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, StationRepository $stationRepository): Response
-    {
-        $station = new Station();
-        $form = $this->createForm(StationType::class, $station);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stationRepository->save($station, true);
+            $data = $form->getData();
 
-            return $this->redirectToRoute('app_station_index', [], Response::HTTP_SEE_OTHER);
+            // Enregistrer les données dans la base de données
+            $problem = new Problem();
+            $problem->setStation($station);
+            $problem->setTitle($data['title']);
+            $problem->setDescription($data['description']);
+            $problem->setDate(new \DateTime('now'));
+
+
+            $entityManager->persist($problem);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_station_show', ['id' => $station->getId()]);
         }
 
-        return $this->renderForm('station/new.html.twig', [
-            'station' => $station,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_station_show', methods: ['GET'])]
-    public function show(Station $station): Response
-    {
+        $problems = $problems->findBy(
+            ['station' => $station],  // Critères de recherche
+            ['date' => 'DESC'],       // Tri par date décroissante
+            3                        // Limite de 3 résultats
+        );
+        $lifts = $liftRepository->findBy(['station' => $station]);
         return $this->render('station/show.html.twig', [
             'station' => $station,
+            'form' => $form->createView(),
+            'problems' => $problems,
+            'lifts' => $lifts
         ]);
-    }
 
-    #[Route('/{id}/edit', name: 'app_station_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Station $station, StationRepository $stationRepository): Response
-    {
-        $form = $this->createForm(StationType::class, $station);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $stationRepository->save($station, true);
-
-            return $this->redirectToRoute('app_station_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('station/edit.html.twig', [
-            'station' => $station,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_station_delete', methods: ['POST'])]
-    public function delete(Request $request, Station $station, StationRepository $stationRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$station->getId(), $request->request->get('_token'))) {
-            $stationRepository->remove($station, true);
-        }
-
-        return $this->redirectToRoute('app_station_index', [], Response::HTTP_SEE_OTHER);
     }
 }

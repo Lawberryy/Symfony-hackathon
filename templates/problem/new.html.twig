@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Problem{% endblock %}
+
+{% block body %}
+    <h1>Create new Problem</h1>
+
+    {{ include('problem/_form.html.twig') }}
+
+    <a href="{{ path('app_problem_index') }}">back to list</a>
+{% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Station{% endblock %}
 
 {% block body %}
@@ -35,4 +36,40 @@
     <a href="{{ path('app_station_edit', {'id': station.id}) }}">edit</a>
 
     {{ include('station/_delete_form.html.twig') }}
+    <div class="problem">
+		{% for problem in problems %}
+			<li>
+				{% if problem.station.id == station.id  %}
+					<h2>{{ problem.title }}</h2>
+					<p>{{ problem.description }}</p>
+					<!--afficher l'heure d'envoie-->
+					<p>Envoyé le
+						{{ problem.date|date('d/m/Y') }}
+						à
+						{{ problem.date|date('H:i') }}</p>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<form method="post">
+		{{ form_start(form) }}
+
+		{{ form_row(form.title) }}
+
+		{{ form_row(form.description) }}
+
+		<button type="submit">Enregistrer</button>
+
+		{{ form_end(form) }}
+	</form>
+
+	<div class="lift">
+		{% for lift in lifts %}
+			<li>
+				{% if lift.station.id == station.id  %}
+					<h2>{{ lift.name }}</h2>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</div>
 {% endblock %}
