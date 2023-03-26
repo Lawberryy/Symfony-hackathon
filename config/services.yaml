@@ -20,14 +20,9 @@ services:
       - "../src/Entity/"
       - "../src/Kernel.php"
 
-<<<<<<< HEAD
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Websocket\MessageHandler:
-        public: true
-        arguments:
-            $entityManager: '@Doctrine\ORM\EntityManagerInterface'
-=======
-  # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
->>>>>>> origin/thomas
+  App\Websocket\MessageHandler:
+      public: true
+      arguments:
+        $entityManager: '@Doctrine\ORM\EntityManagerInterface'

@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d0f02b6-0478-4c05-9d58-1c7198bbdf69" name="Changes" comment="">
+    <list default="true" id="a22d2900-bd52-4a6a-9313-d5dcdc2042dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20230324072801.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20230324105515.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20230324124844.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20230324162337.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Command/WebsocketServerCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/WebsocketServerCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Websocket/MessageHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Websocket/MessageHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/chat/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/chat/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Station.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Station.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

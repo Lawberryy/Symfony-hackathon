@@ -210,7 +210,7 @@ class Station
         return $this;
     }
 
-    public function removeProblem(Problem $problem): self
+    public function removeProblem(Problem $problem): void
     {
         if ($this->problems->removeElement($problem)) {
             // set the owning side to null (unless already changed)
