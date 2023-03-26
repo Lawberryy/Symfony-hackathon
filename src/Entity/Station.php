@@ -27,7 +27,7 @@ class Station
     private ?string $icon_url = null;
 
     #[ORM\ManyToOne(inversedBy: 'stations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Domain $domain = null;
 
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Lift::class)]
@@ -210,15 +210,15 @@ class Station
         return $this;
     }
 
-    public function removeProblem(Problem $problem): self
+    public function removeProblem(Problem $problem): void
     {
         if ($this->problems->removeElement($problem)) {
             // set the owning side to null (unless already changed)
             if ($problem->getStation() === $this) {
                 $problem->setStation(null);
             }
-        }}
-
+        }
+    }
     public function getNotation(): ?int
     {
         return $this->notation;
@@ -228,5 +228,10 @@ class Station
     {
         $this->notation = $notation;
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
