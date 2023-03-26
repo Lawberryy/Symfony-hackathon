@@ -218,7 +218,8 @@ class Station
                 $problem->setStation(null);
             }
         }
-
+    }
+    
     public function getNotation(): ?int
     {
         return $this->notation;

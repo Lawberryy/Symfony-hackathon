@@ -29,4 +29,14 @@
 
 		{{ form_end(form) }}
 	</form>
+
+	<div class="lift">
+		{% for lift in lifts %}
+			<li>
+				{% if lift.station.id == station.id  %}
+					<h2>{{ lift.name }}</h2>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</div>
 {% endblock %}
