@@ -5,7 +5,18 @@
 		<h1 class="name">
 			{{ station.name }}</h1>
 
+		<h2 class="probtitle">Nos pistes :</h2>
+		<div class="lift">
+			{% for slope in slopes %}
+				<li class="lifts">
+					{% if slope.station.id == station.id  %}
+						<a class="button" href="{{ path('app_lift_show', { id: slope.id }) }}" class="card-title">{{ slope.name }}</a>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</div>
 
+		<h2 class="probtitle">Nos remontées :</h2>
 		<div class="lift">
 			{% for lift in lifts %}
 				<li class="lifts">
@@ -25,7 +36,7 @@
 					<li class="solo">
 						{% if problem.station.id == station.id  %}
 							<h2 class="titre">{{ problem.title }}</h2>
-							<p>{{ problem.description }}</p>
+							<p class="description">{{ problem.description }}</p>
 							<!--afficher l'heure d'envoie-->
 							<p class="date">Envoyé le
 								{{ problem.date|date('d/m/Y') }}
@@ -38,23 +49,51 @@
 			</div>
 		</div>
 
-		<h2 class="probtitle">Signaler un problème :</h2>
+		<div class="probleme">
+			<h2 class="probtitle">Signaler un problème :</h2>
 
-		<form method="post">
-			{{ form_start(form) }}
+			<form method="post" class="form">
+				{{ form_start(form) }}
 
-			{{ form_row(form.title) }}
+				{{ form_row(form.title, {'attr': {'class': 'form-title', 'placeholder': 'Quel type de problème ?'}   }) }}
 
-			{{ form_row(form.description) }}
+				{{ form_row(form.description, {'attr': {'class': 'form-descr', 'placeholder': 'Décrivez-nous votre problème.'}}) }}
 
-			<button type="submit">Enregistrer</button>
+				<button type="submit">Enregistrer</button>
 
-			{{ form_end(form) }}
-		</form>
+				{{ form_end(form) }}
+			</form>
+		</div>
 
 	</div>
 
 	<style>
+
+		.form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+		}
+
+		.form-title {}
+
+		.probleme {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center width: 30vw;
+			width: 30vw;
+			height: 30vh;
+			background-color: rgb(169, 165, 169, 0.95);
+			margin: 10px auto;
+			padding: 10px;
+			border-radius: 10px;
+		}
+
+		label {
+			display: none;
+		}
 		* {
 			font-family: 'Roboto', sans-serif;
 			margin: 0;
@@ -63,8 +102,10 @@
 		}
 
 		body {
-			background-image: url('../lessaisies3.png');
+			/*background-image: url('../lessaisies3.png');*/
+			background-color: #5D5B5D;
 			background-size: cover;
+			background-repeat: no-repeat;
 			height: 100vh;
 			width: 100vw;
 		}

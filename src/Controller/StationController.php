@@ -14,12 +14,14 @@ use App\Entity\Problem;
 use App\Repository\ProblemRepository;
 use App\Repository\LiftRepository;
 use App\Entity\Lift;
+use App\Repository\SlopeRepository;
+use App\Entity\Slope;
 
 
 class StationController extends AbstractController
 {
     #[Route('/station/{id}', name: 'app_station_show')]
-    public function show(Request $request, Station $station, EntityManagerInterface $entityManager, ProblemRepository $problems, LiftRepository $liftRepository): Response
+    public function show(Request $request, Station $station, EntityManagerInterface $entityManager, ProblemRepository $problems, LiftRepository $liftRepository, SlopeRepository $slopeRepository): Response
 {
     $form = $this->createFormBuilder()
         ->add('title', TextType::class)
@@ -45,14 +47,21 @@ class StationController extends AbstractController
         return $this->redirectToRoute('app_station_show', ['id' => $station->getId()]);
     }
 
-    $problems = $problems->findBy(['station' => $station]);
+    $problems = $problems->findBy(
+        ['station' => $station],  // Critères de recherche
+        ['date' => 'DESC'],       // Tri par date décroissante
+        3                        // Limite de 3 résultats
+    );
+    
     $lifts = $liftRepository->findBy(['station' => $station]);
+    $slopes = $slopeRepository->findBy(['station' => $station]);    
 
     return $this->render('station/show.html.twig', [
         'station' => $station,
         'form' => $form->createView(),
         'problems' => $problems,
-        'lifts' => $lifts
+        'lifts' => $lifts,
+        'slopes' => $slopes,
     ]);
 
     
