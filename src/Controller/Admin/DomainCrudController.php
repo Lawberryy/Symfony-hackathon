@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Domain;
+use App\Entity\Station;
 use App\Repository\StationRepository;
 use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -14,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,7 +37,7 @@ class DomainCrudController extends AbstractCrudController
         $owner_id = $this->getUser()->getId();
         return [
             TextField::new('name'),
-            TextField::new('description'),
+            TextareaField::new('description'),
             ImageField::new('icon_url')
                 ->setBasePath('uploads/icons')
                 ->setUploadDir('public/uploads/icons')
@@ -47,7 +49,12 @@ class DomainCrudController extends AbstractCrudController
                         ->setParameter('id', $owner_id);
                 }
             ])->addCssClass('d-none')->onlyWhenCreating(),
-            AssociationField::new("stations"),
+            AssociationField::new("stations")->setFormTypeOptions([
+                    'required' => false,
+                    'by_reference' => false,
+                    'multiple' => true,
+                    'class' => Station::class,
+            ]),
         ];
     }
 }

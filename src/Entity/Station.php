@@ -27,7 +27,7 @@ class Station
     private ?string $icon_url = null;
 
     #[ORM\ManyToOne(inversedBy: 'stations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Domain $domain = null;
 
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Lift::class)]

@@ -43,7 +43,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         $problemRepository = $this->entityManager->getRepository(Problem::class);
-        yield MenuItem::linkToRoute('Retour au site', 'fa fa-home', 'home');
+        yield MenuItem::linkToRoute('Retour au site', 'fa fa-home', 'main');
         if ($this->authChecker->isGranted('ROLE_SU')) {
             yield MenuItem::section('Super User');
             yield MenuItem::linkToCrud('Domain', ' fa fa-map-o', Domain::class)
@@ -51,8 +51,11 @@ class DashboardController extends AbstractDashboardController
         }
         yield MenuItem::section('Admin');
         yield MenuItem::linkToCrud('Station', 'fa fa-snowflake-o', Station::class);
-        yield MenuItem::linkToCrud('Lift', 'fa fa-elevator', Lift::class);
-        yield MenuItem::linkToCrud('Slope', 'fa fa-person-skiing', Slope::class);
+        //si l'utilisateur n'a aucune station, on ne lui affiche pas le menu
+        if ($this->authChecker->isGranted('ROLE_ADMIN') && $this->getUser()->getStations()->count() > 0 || $this->authChecker->isGranted('ROLE_SU')) {
+            yield MenuItem::linkToCrud('Lift', 'fa fa-elevator', Lift::class);
+            yield MenuItem::linkToCrud('Slope', 'fa fa-person-skiing', Slope::class);
+        }
         if ($problemRepository->count([]) > 0) {
             yield MenuItem::linkToCrud('Problèmes', 'fas fa-list', Problem::class);
         }
