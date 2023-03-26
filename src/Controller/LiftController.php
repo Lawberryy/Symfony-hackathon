@@ -25,6 +25,7 @@ class LiftController extends AbstractController
     #[Route('/lift/{id}', name: 'app_lift_show')]
     public function show(Lift $lift): Response{
 
+
         $heureActuelle = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $heureOuverture = DateTime::createFromFormat('H:i:s', $lift->getFirstHour()->format('H:i:s'));
         $heureFermeture = DateTime::createFromFormat('H:i:s', $lift->getLastHour()->format('H:i:s'));
@@ -32,24 +33,33 @@ class LiftController extends AbstractController
         if ($heureActuelle < $heureOuverture){
             $diff = $heureOuverture->diff($heureActuelle);
             $tempsRestant = $diff->format('%H heures %i minutes');
-            $message = "La piste est fermée pour le moment. Elle ouvrira dans " . $tempsRestant;
+            $messageTxt = "La piste est fermée pour le moment. Elle ouvrira dans " ;
+            $messageValue =  $tempsRestant;
+
         } elseif ($heureActuelle >= $heureOuverture && $heureActuelle <= $heureFermeture){
             $diff = $heureFermeture->diff($heureActuelle);
             $tempsRestant = $diff->format('%H heures %i minutes');
-            $message = "La piste est ouverte. Elle fermera dans " . $tempsRestant;
+            $messageTxt = "La piste est ouverte. Elle fermera dans " ;
+
+            $messageValue =  $tempsRestant;
         } else {
             $diff = $heureActuelle->diff($heureFermeture);
             $tempsRestant = $diff->format('%H heures %i minutes');
-            $message = "La piste est fermée depuis " . $tempsRestant;
+            $messageTxt = "La piste est fermée depuis " ;
+
+            $messageValue =  $tempsRestant;
         }
 
 
         $heureTest = $heureActuelle->format('%H heures %i minutes');
+        $station_id = $lift->getStation()->getId();
 
         return $this->render('lift/show.html.twig', [
             'lift' => $lift,
-            'message' => $message,
-            'heureTest' => $heureTest,
+            'message' => $messageTxt,
+            "messageValue" => $messageValue,
+            'station_id' => $station_id,
+
         ]);
     }
 }
