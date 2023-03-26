@@ -11,11 +11,4 @@
 			</div>
 		</div>
 	{% endfor %}
-
-	{% for lift in lifts %}
-		<div>
-			<a href="{{ path('app_lift_show', { id: lift.id }) }}" class="card-title">{{ lift.name }}</a>
-		</div>
-
-	{% endfor %}
 {% endblock %}

@@ -36,14 +36,6 @@ class Slope
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $exception_message = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $Peak_Hour = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $snow_quality = null;
-
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -132,30 +124,4 @@ class Slope
 
         return $this;
     }
-
-    public function getPeakHour(): ?\DateTimeInterface
-    {
-        return $this->Peak_Hour;
-    }
-
-    public function setPeakHour(?\DateTimeInterface $Peak_Hour): self
-    {
-        $this->Peak_Hour = $Peak_Hour;
-
-        return $this;
-    }
-
-    public function getSnowQuality(): ?int
-    {
-        return $this->snow_quality;
-    }
-
-    public function setSnowQuality(?int $snow_quality): self
-    {
-        $this->snow_quality = $snow_quality;
-
-        return $this;
-    }
-
-
 }
