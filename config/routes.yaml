@@ -1,11 +1,15 @@
 # routes.yaml
 controllers:
-    resource:
-        path: '../src/Controller/'
-        namespace: 'App\Controller\\'
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
 app_domain_show:
     path: '/domain/{id}'
     controller: 'App\Controller\DomainController::show'
     requirements:
         id: '\d+'
+lift_add:
+  path: /lifts/add/{id}
+  controller: App\Controller\CreateTrailController::addLift
+  methods: [GET, POST]

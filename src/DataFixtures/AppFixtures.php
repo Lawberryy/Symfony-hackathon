@@ -115,15 +115,17 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
 
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(10, 20); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $slope = new Slope();
                 $slope->setStation($station);
                 $slope->setName('Slope ' . $i);
                 $slope->setDifficulty(rand(1, 4)); // green(1), blue(2), red(3), black(4)
                 $slope->setFirstHour(new \DateTime('10:00'));
                 $slope->setLastHour(new \DateTime('18:00'));
+                $slope->setDuration(new \DateTime($randomDuration));
                 $slope->setPeakHour(new \DateTime('12:00'));
                 $slope->setSnowQuality(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)
-
+                
                 $manager->persist($slope);
             }
             $manager->flush();
@@ -134,11 +136,13 @@ Au pied du Mont Charvin, les centaines de chalets éparpillés autour du clocher
 
         foreach ($stations as $station) {
             for ($i = 1; $i <= rand(5, 10); $i++) {
+                $randomDuration = "00:" . rand(1, 9) . ":" . rand(0, 59);
                 $lift = new Lift();
                 $lift->setStation($station);
                 $lift->setName('Lift n°' . $i);
                 $lift->setFirstHour(new \DateTime('10:00'));
                 $lift->setLastHour(new \DateTime('17:30'));
+                $lift->setDuration(new \DateTime($randomDuration));
                 $lift->setType($liftTypes[rand(0, count($liftTypes) - 1)]);
                 $lift->setPeakHour(new \DateTime('12:30'));
                 $lift->setComfort(rand(1, 5)); // poor(1), bad(2), average(3), good(4), excellent(5)

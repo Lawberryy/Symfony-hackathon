@@ -1,0 +1,244 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateTrailController!{% endblock %}
+
+{% block body %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color : black;
+        font-family: 'Oswald', sans-serif;
+    }
+
+    h1{
+        text-align: center;
+        font-size: 42px;
+        margin: 10px;
+        color: white;
+    }
+
+    body {
+        background-image: url("../backgroundTrail.jpg");
+        background-size: 150%;
+        background-repeat: no-repeat;
+    }
+
+    .container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+    }
+
+    .container form{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 10px;
+        gap: 10px;
+    }
+
+    .container form div label{
+        display: none;
+    }
+
+    .tableAndForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 25%;
+    }
+
+    .tableAndForm div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .allData {
+        position: absolute;
+        top: 56%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: space-around;
+        width: 85%;
+        border-radius: 16px;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(2px);
+    }
+
+    select, input {
+        width: 100%;
+        padding: 8px 18px;
+        margin: 6px 0;
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: black;
+    }
+
+    option{
+        color: black;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    button{
+        background-color: #242424;
+        border: none;
+        color: white;
+        padding: 12px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 8px 2px;
+        cursor: pointer;
+        border-radius: 2px;
+        font-weight: bold;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px;
+    }
+
+    tbody:before {
+    content:"@";
+    display:block;
+    line-height: 16px;
+    text-indent:-99999px;
+}
+
+    th, td {
+        text-align: center;
+        padding: 2px;
+        font-size: 14px;
+    }
+
+    label{
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    th{
+        background-color: #DB2828;
+        color: white;
+    }
+
+</style>
+
+<section>
+    <div class="container">
+        <h1>Créer un parcours</h1>
+        {{ form_start(formChangeStation)}}
+            {{ form_row(formChangeStation.changeStation, {
+                label: ' '
+            })
+            }}
+            <button type="submit" class="btn">CHANGER</button>
+        {{ form_end(formChangeStation) }}
+    </div>
+    <div class="allData">
+        <div class="tableAndForm">
+            <table class="allLift">
+                <thead>
+                    <tr>
+                        <th colspan="2">Toutes les remontées</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lift in lifts %}
+                        <tr>
+                            <td>{{ lift.name }}</td>
+                            <td>{{lift.duration|date("i:s")}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                {{ form_start(formLift) }}
+                    {{ form_row(formLift.addLift, {
+                        label: 'Ajouter une remontée :'
+                    }) }}
+                    <button type="submit" class="btn">AJOUTER</button>
+                {{ form_end(formLift) }}
+            </div>
+        </div>
+        <div class="tableAndForm">
+            <table class="allSlope">
+                <thead>
+                    <tr>
+                        <th colspan="2">Toutes les pistes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for slope in slopes %}
+                        <tr>
+                            <td>{{ slope.name }}</td>
+                            <td>{{ slope.duration|date("i:s")  }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                {{ form_start(formSlope) }}
+                    {{ form_row(formSlope.addSlope, {
+                        label: 'Ajouter une piste :'
+                    }) }}
+                    <button type="submit" class="btn">AJOUTER</button>
+                {{ form_end(formSlope) }}
+            </div>
+        </div>
+        <div class="tableAndForm">
+            <table class="myTrail">
+                <thead>
+                    <tr>
+                        <th colspan="2">Mon parcours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trail in trails %}
+                        <tr>
+                            {% if trail.liftid == null %}
+                                <td>{{ trail.slopeid.name }}</td>
+                                <td>{{ trail.slopeid.duration|date("i:s") }}</td>
+                            {% else %}
+                                <td>{{ trail.liftid.name }}</td>
+                                <td>{{ trail.liftid.duration|date("i:s") }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <h2>Temps total : {{totalDuration|date("i:s") }}</h2>
+                {{ form_start(formTrail) }}
+                    {{ form_row(formTrail.TrailName, {
+                        label: 'Donner un nom à votre trajet :'
+                    }) }}
+                    <button type="submit" class="btn">AJOUTER</button>
+                {{ form_end(formTrail) }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
