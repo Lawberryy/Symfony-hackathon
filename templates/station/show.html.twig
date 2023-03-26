@@ -2,81 +2,174 @@
 
 {% block body %}
 	<div class="conteneur">
-		<h1 class="name">
-			{{ station.name }}</h1>
-
-		<h2 class="probtitle">Nos pistes :</h2>
-		<div class="lift">
-			{% for slope in slopes %}
-				<li class="lifts">
-					{% if slope.station.id == station.id  %}
-						<a class="button" href="{{ path('app_lift_show', { id: slope.id }) }}" class="card-title">{{ slope.name }}</a>
-					</li>
-				{% endif %}
-			{% endfor %}
+		<div class="zero">
+			<div class="nameteo">
+				<h1 class="name">{{ station.name }}</h1>
+				<div class="meteo">
+					{% if station.weather == 'sunny' %}
+						<img src="{{ asset('assets/img/station/soleil.png')}}" class="sun-icon"></img>
+				{% else %}
+					<img src="{{ asset('assets/img/station/neige.png')}}" class="snow-icon"></img>
+			{% endif %}
 		</div>
-
-		<h2 class="probtitle">Nos remontées :</h2>
-		<div class="lift">
-			{% for lift in lifts %}
-				<li class="lifts">
-					{% if lift.station.id == station.id  %}
-						<a class="button" href="{{ path('app_lift_show', { id: lift.id }) }}" class="card-title">{{ lift.name }}</a>
-					</li>
-				{% endif %}
-			{% endfor %}
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<p class="card-text">{{ station.description }}</p>
 		</div>
+	</div>
+</div>
+<div class="premier">
 
-		<h2 class="probtitle">Les derniers problèmes signalés :</h2>
-
-		<div class="problem">
-
-			<div class="problist">
-				{% for problem in problems %}
-					<li class="solo">
-						{% if problem.station.id == station.id  %}
-							<h2 class="titre">{{ problem.title }}</h2>
-							<p class="description">{{ problem.description }}</p>
-							<!--afficher l'heure d'envoie-->
-							<p class="date">Envoyé le
-								{{ problem.date|date('d/m/Y') }}
-								à
-								{{ problem.date|date('H:i') }}</p>
-						</li>
-					{% endif %}
-
-				{% endfor %}
-			</div>
-		</div>
-
-		<div class="probleme">
-			<h2 class="probtitle">Signaler un problème :</h2>
-
-			<form method="post" class="form">
-				{{ form_start(form) }}
-
-				{{ form_row(form.title, {'attr': {'class': 'form-title', 'placeholder': 'Quel type de problème ?'}   }) }}
-
-				{{ form_row(form.description, {'attr': {'class': 'form-descr', 'placeholder': 'Décrivez-nous votre problème.'}}) }}
-
-				<button type="submit">Enregistrer</button>
-
-				{{ form_end(form) }}
-			</form>
-		</div>
-
+	<h2 class="probtitle">Nos pistes :</h2>
+	<div class="lift">
+		{% for slope in slopes %}
+			<li class="lifts">
+				{% if slope.station.id == station.id  %}
+					<a class="button" href="{{ path('app_slope_show', { id: slope.id }) }}" class="card-title">{{ slope.name }}</a>
+				</li>
+			{% endif %}
+		{% endfor %}
 	</div>
 
+</div>
+
+<div class="deux">
+	<h2 class="probtitle">Nos remontées :</h2>
+	<div class="lift">
+		{% for lift in lifts %}
+			<li class="lifts">
+				{% if lift.station.id == station.id  %}
+					<a class="button" href="{{ path('app_lift_show', { id: lift.id }) }}" class="card-title">{{ lift.name }}</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+
+<div class="trois">
+
+	<h2 class="probtitle">Les derniers problèmes signalés :</h2>
+
+	<div class="problem">
+
+		<div class="problist">
+			{% for problem in problems %}
+				<li class="solo">
+					{% if problem.station.id == station.id  %}
+						<h2 class="titre">{{ problem.title }}</h2>
+						<p class="description">{{ problem.description }}</p>
+						<!--afficher l'heure d'envoie-->
+						<p class="date">Envoyé le
+							{{ problem.date|date('d/m/Y') }}
+							à
+							{{ problem.date|date('H:i') }}</p>
+					</li>
+				{% endif %}
+
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="probleme">
+		<h2 class="probtitle2">Signaler un problème :</h2>
+
+		<form method="post" class="form">
+			{{ form_start(form) }}
+
+			<div class="input">
+				{{ form_row(form.title, {'attr': {'class': 'form-title', 'placeholder': 'Titre'}   }) }}
+
+				{{ form_row(form.description, {'attr': {'class': 'form-descr', 'placeholder': 'Description'}}) }}
+
+			</div>
+
+			<button type="submit">Envoyer</button>
+
+			{{ form_end(form) }}
+		</form>
+	</div>
 	<style>
+		.nameteo {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 25px;
+		}
+
+		.sun-icon {
+			margin-top: 12px;
+			width: 50px;
+			height: 50px;
+		}
+
+		.snow-icon {
+			margin-top: 12px;
+			width: 50px;
+			height: 50px;
+		}
+
+		.card-text {
+			color: white;
+			font-size: 20px;
+			text-align: center;
+			margin: 10px 5vw 35px;
+		}
+
+		.input {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.probtitle2 {
+			color: black;
+			font-size: 25px;
+			text-align: center;
+		}
 
 		.form {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: start;
 			text-align: center;
+			width: 100%;
 		}
 
-		.form-title {}
+		label {
+			display: none;
+		}
+
+		input[type="text"] {
+			display: flex;
+			flex-direction: column;
+			width: 150px;
+			height: 25px;
+			font-size: 13px;
+			padding: 1px;
+			margin-top: 10px;
+			margin-bottom: 4px;
+			border: none;
+			border-bottom: 1px solid black;
+		}
+
+		textarea {
+			height: 60px;
+			width: 250px;
+			border: 1px solid;
+			padding: 4px;
+			margin-top: 4px;
+		}
+
+		button {
+			padding: ;
+			padding: 4px 10px;
+			margin-top: 10px;
+			background-color: white;
+			border: 1px solid black;
+			border-radius: 5px;
+			margin-left: auto;
+			margin-right: auto;
+		}
 
 		.probleme {
 			display: flex;
@@ -84,16 +177,60 @@
 			align-items: center;
 			text-align: center width: 30vw;
 			width: 30vw;
-			height: 30vh;
-			background-color: rgb(169, 165, 169, 0.95);
+			height: auto;
+			background-color: white;
 			margin: 10px auto;
 			padding: 10px;
 			border-radius: 10px;
 		}
 
-		label {
-			display: none;
+		.zero {
+			background-image: url("{{ asset('assets/img/montagne_nuit.jpg')}}");
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 100vw;
+			backdrop-filter: blur(5px);
+			padding-top: 35px;
+			padding-bottom: 35px;
 		}
+
+		.premier {
+			background-image: url("{{ asset('assets/img/Index_background.jpg')}}");
+			/*background-image: url("{{ asset('assets/img/Domaines_background_ED.jpg')}}");*/
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 100vw;
+			backdrop-filter: blur(5px);
+			padding-top: 35px;
+			padding-bottom: 35px;
+			border-top: solid 5px white;
+		}
+
+		.deux {
+			background-image: url("{{ asset('assets/img/Domaines_background_ED.jpg')}}");
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 100vw;
+			backdrop-filter: blur(5px);
+			border-top: solid 5px white;
+			padding-top: 35px;
+			padding-bottom: 35px;
+		}
+
+		.trois {
+			background-color: rgba(255, 255, 255, 0.734);
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 100vw;
+			backdrop-filter: blur(5px);
+			border-top: solid 5px white;
+			padding-top: 35px;
+			padding-bottom: 35px;
+		}
+
+
+		.form-title {}
+
 		* {
 			font-family: 'Roboto', sans-serif;
 			margin: 0;
@@ -114,7 +251,6 @@
 			font: bold 35px Roboto, sans-serif;
 			text-decoration: none;
 			mix-blend-mode: screen;
-			margin-top: 35px;
 			background-color: rgb(255, 255, 255, 0.8);
 			margin-left: auto;
 			margin-right: auto;
@@ -132,6 +268,10 @@
 			width: 80vw;
 			margin-left: auto;
 			margin-right: auto;
+
+			@media screen and(max-width: 768px) {
+				flex-wrap: nowrap;
+			}
 		}
 
 		.lifts {
@@ -141,49 +281,42 @@
 
 		.button {
 			font: bold 20px Roboto, sans-serif;
+			color: blue;
 			text-decoration: none;
 			mix-blend-mode: screen;
 			text-align: center;
 			justify-content: center;
 			align-items: center;
-			background-color: rgb(255, 255, 255, 0.8);
+			background-color: rgb(255, 255, 255);
 			border-radius: 10px;
 			margin: 50px 25px 25px;
 			padding: 30px 50px;
 		}
+
 		.button:hover {
-			background-color: rgb(255, 255, 255);
+			background-color: rgb(255, 255, 255, 0.8);
+			mix-blend-mode: none;
 		}
 
-
-		.conteneur {
-			margin: 4%;
-			border-radius: 10px;
-		}
 
 		.problem {
 			display: flex;
 			flex-direction: column;
-			width: 80vw;
-			height: auto;
-			list-style: none;
-			margin-left: 5%;
-			margin-right: 5%;
-			margin-top: 10px;
-			padding: 10px;
-			border-radius: 10px;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.probtitle {
-			margin-top: 45px;
 			font: white bold Roboto, sans-serif;
-			font-size: 30px;
+			font-size: 35px;
 			text-align: center;
+			margin-top: 35px;
 		}
 
+
 		.problist {
+			margin: 35px auto 0;
 			display: flex;
-			justify-content: space-around;
 		}
 
 		.solo {
@@ -198,6 +331,7 @@
 			margin: 10px;
 			padding: 10px;
 			border-radius: 10px;
+			border: solid 4px white;
 		}
 
 		.titre {
@@ -212,7 +346,6 @@
 			text-align: center;
 			font-size: 50px;
 			color: white;
-			margin-top: 50px;
 		}
 	</style>
 {% endblock %}

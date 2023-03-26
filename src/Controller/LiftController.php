@@ -28,7 +28,7 @@ class LiftController extends AbstractController
         $heureActuelle = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $heureOuverture = DateTime::createFromFormat('H:i:s', $lift->getFirstHour()->format('H:i:s'));
         $heureFermeture = DateTime::createFromFormat('H:i:s', $lift->getLastHour()->format('H:i:s'));
-                
+
         if ($heureActuelle < $heureOuverture){
             $diff = $heureOuverture->diff($heureActuelle);
             $tempsRestant = $diff->format('%H heures %i minutes');
@@ -51,5 +51,5 @@ class LiftController extends AbstractController
             'message' => $message,
             'heureTest' => $heureTest,
         ]);
-    }    
+    }
 }
